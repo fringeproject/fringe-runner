@@ -5,7 +5,7 @@ type ModuleInterface interface {
 	Slug() string
 	Description() string
 
-	Run() error
+	Run(*ModuleContext) error
 }
 
 type Module struct {

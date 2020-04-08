@@ -1,12 +1,16 @@
 package commands
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 
 	"github.com/fringeproject/fringe-runner/common"
+	"github.com/fringeproject/fringe-runner/modules"
+	"github.com/fringeproject/fringe-runner/session"
 )
 
 type ModuleCommand struct {
@@ -14,7 +18,31 @@ type ModuleCommand struct {
 }
 
 func (s *ModuleCommand) listModules() error {
-	// TODO: list modules
+	// Create a new session that hold the modules
+	sess, err := session.NewSession()
+	if err != nil {
+		logrus.Warn(err)
+		os.Exit(1)
+	}
+	defer sess.Close()
+
+	// Load Fringe modules in the session
+	modules.LoadModules(sess)
+
+	// Get the list of modules
+	moduleList, err := sess.GetModules()
+	if err != nil {
+		return err
+	}
+
+	// Convert the list to print it as a JSON list
+	moduleJSON, err := json.MarshalIndent(moduleList, "", "\t")
+	if err != nil {
+		return fmt.Errorf("Couldn't format the module list to JSON.")
+	}
+
+	fmt.Println(string(moduleJSON))
+
 	return nil
 }
 

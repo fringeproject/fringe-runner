@@ -17,7 +17,7 @@ This command interacts with the fringe modules.
 You can list the modules with the `-l/--list` argument:
 
 ```bash
-fringe-runner module --list
+fringe-runner module --list | jq
 ```
 
 You can execute a module manually with the following command:

@@ -28,7 +28,13 @@ func (m *HelloWorld) Description() string {
 }
 
 func (m *HelloWorld) Run(ctx *common.ModuleContext) error {
-	asset := ctx.Asset
+	asset, err := ctx.GetAssetAsRawString()
+	if err != nil {
+		logrus.Debug("Cannot get asset as a raw string")
+		logrus.Debug(err)
+		return err
+	}
+
 	logrus.Infof("Hello, %s!", asset)
 	return nil
 }

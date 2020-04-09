@@ -17,18 +17,18 @@ import (
 type HTTPOptions struct {
 	// We use a default User-Agent but a user may need a custom one to bypass
 	// some verification
-	UserAgent      string
+	UserAgent string
 	// Custom headers
-	Headers        []HTTPHeader
+	Headers []HTTPHeader
 	// Some use need a custom timeout, specially on a brute-force attack
-	Timeout        time.Duration
+	Timeout time.Duration
 	// Do e follow redirection on 301/302 ?
 	FollowRedirect bool
 	// Set a proxy for the HTTP and HTTPS requests
-	Proxy          string
+	Proxy string
 	// Do we need to check the SSL/TLS server certificate. Can be usefull when
 	// you use a custom proxy like Burp
-	VerifyCert     bool
+	VerifyCert bool
 }
 
 // Represents a (custom) HTTP header
@@ -40,13 +40,13 @@ type HTTPHeader struct {
 // Represents an HTTP client
 type HTTPClient struct {
 	// The internal Go HTTP client
-	client    *http.Client
+	client *http.Client
 	// A context to stop the request
-	context   context.Context
+	context context.Context
 	// Set this here instead of in the headers field
 	userAgent string
 	// Custom headers
-	headers   []HTTPHeader
+	headers []HTTPHeader
 }
 
 func NewHTTPClient(c context.Context, opt *HTTPOptions) (*HTTPClient, error) {

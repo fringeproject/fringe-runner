@@ -67,8 +67,11 @@ func (m *Crtsh) Run(ctx *common.ModuleContext) error {
 			if strings.HasSuffix(host, baseHostname) && !common.StringInSlice(hostnames, host) {
 				hostnames = append(hostnames, host)
 
-				// Don't check error
-				ctx.CreateNewAssetAsHostname(host)
+				err = ctx.CreateNewAssetAsHostname(host)
+				if err != nil {
+					logrus.Info("Something went wrong creating the new asset.")
+					logrus.Debug(err)
+				}
 			}
 		}
 	}

@@ -38,7 +38,7 @@ func (m *HelloWorld) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	ctx.CreateNewAsset(fmt.Sprintf("Hello, %s!", asset), assets.AssetTypes["raw"])
+	err = ctx.CreateNewAsset(fmt.Sprintf("Hello, %s!", asset), assets.AssetTypes["raw"])
 
-	return nil
+	return err
 }

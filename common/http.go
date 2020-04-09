@@ -59,7 +59,7 @@ func NewHTTPClient(c context.Context, opt *HTTPOptions) (*HTTPClient, error) {
 
 	// First we check the options before continuing
 	if opt == nil {
-		return nil, fmt.Errorf("Options cannot be nil")
+		return nil, fmt.Errorf("HTTP options cannot be nil")
 	}
 
 	// Parse the Proxy URL

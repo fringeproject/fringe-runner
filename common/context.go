@@ -128,6 +128,26 @@ func (ctx *ModuleContext) getDefaultHTTPOptions() *HTTPOptions {
 	return &opts
 }
 
+func (ctx *ModuleContext) HttpRequest(method string, target string, data io.Reader, opts *HTTPOptions) (*int, *[]byte, *http.Header, error) {
+	// If the HTTPOptions is not set, then use the default one
+	if opts == nil {
+		opts = ctx.getDefaultHTTPOptions()
+	}
+
+	// Send the request so we need the create the client then do the request
+	httpClient, err := NewHTTPClient(context.Background(), opts)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+
+	statusCode, responseBody, headers, err := httpClient.DoRequest(method, target, "", "", data)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+
+	return statusCode, responseBody, headers, nil
+}
+
 func (ctx *ModuleContext) HTTPRequestJson(method string, target string, request interface{}, response interface{}, opts *HTTPOptions) (*int, *[]byte, *http.Header, error) {
 	var requestBody io.Reader
 

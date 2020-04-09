@@ -66,11 +66,12 @@ func (m *Crtsh) Run(ctx *common.ModuleContext) error {
 			// as argument
 			if strings.HasSuffix(host, baseHostname) && !common.StringInSlice(hostnames, host) {
 				hostnames = append(hostnames, host)
+
+				// Don't check error
+				ctx.CreateNewAssetAsHostname(host)
 			}
 		}
 	}
-
-	logrus.Infof("Found hostnames: %s", hostnames)
 
 	return nil
 }

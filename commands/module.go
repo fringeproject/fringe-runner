@@ -68,11 +68,19 @@ func (s *ModuleCommand) executeModule() error {
 		return err
 	}
 
+	// Get the new assets and convert to print it as a JSON list
+	assets := ctx.NewAssets
+	moduleJSON, err := json.MarshalIndent(assets, "", "\t")
+	if err != nil {
+		return fmt.Errorf("Couldn't format the module list to JSON.")
+	}
+
+	fmt.Println(string(moduleJSON))
+
 	return nil
 }
 
 func (s *ModuleCommand) Execute(c *cli.Context) error {
-
 	// Create a new session that hold the modules
 	// Even if we don't know the command the user want to pass, we create the
 	// session and load the modules.

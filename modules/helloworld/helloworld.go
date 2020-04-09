@@ -1,9 +1,12 @@
 package helloworld
 
 import (
+	"fmt"
+
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
+	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type HelloWorld struct {
@@ -35,6 +38,7 @@ func (m *HelloWorld) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	logrus.Infof("Hello, %s!", asset)
+	ctx.CreateNewAsset(fmt.Sprintf("Hello, %s!", asset), assets.AssetTypes["raw"])
+
 	return nil
 }

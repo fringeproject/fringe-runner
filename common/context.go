@@ -10,26 +10,38 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
+
+	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type ModuleContext struct {
-	Asset string
+	Asset     assets.Asset
+	NewAssets []assets.Asset
 }
 
 func NewModuleContext(asset string) (*ModuleContext, error) {
 	ctx := ModuleContext{
-		Asset: asset,
+		Asset: assets.Asset{
+			Value: asset,
+			Type:  "",
+		},
+		NewAssets: make([]assets.Asset, 0),
 	}
 
 	return &ctx, nil
 }
 
+// Get the current asset as a raw string
 func (ctx *ModuleContext) GetAssetAsRawString() (string, error) {
-	return ctx.Asset, nil
+	return ctx.Asset.Value, nil
 }
 
+// Check if the asset is a hostname and return it
 func (ctx *ModuleContext) GetAssetAsHostname() (string, error) {
-	asset := ctx.Asset
+	asset, err := ctx.GetAssetAsRawString()
+	if err != nil {
+		return "", err
+	}
 
 	if IsHostname(asset) {
 		return asset, nil
@@ -38,8 +50,12 @@ func (ctx *ModuleContext) GetAssetAsHostname() (string, error) {
 	}
 }
 
+// Check if the asset is an IP and return it
 func (ctx *ModuleContext) GetAssetAsIP() (string, error) {
-	asset := ctx.Asset
+	asset, err := ctx.GetAssetAsRawString()
+	if err != nil {
+		return "", err
+	}
 
 	if IsIPv4(asset) {
 		return asset, nil
@@ -48,14 +64,56 @@ func (ctx *ModuleContext) GetAssetAsIP() (string, error) {
 	}
 }
 
+// Check if the asset is a URL and return it
 func (ctx *ModuleContext) GetAssetAsURL() (string, error) {
-	asset := ctx.Asset
+	asset, err := ctx.GetAssetAsRawString()
+	if err != nil {
+		return "", err
+	}
 
 	if IsURL(asset) {
 		return asset, nil
 	} else {
 		return "", fmt.Errorf("Current data is not a valid url.")
 	}
+}
+
+// Create a new asset from the module execution
+func (ctx *ModuleContext) CreateNewAsset(assetValue string, assetType assets.Type) error {
+	asset := assets.Asset{
+		Value: assetValue,
+		Type:  assetType,
+	}
+	ctx.NewAssets = append(ctx.NewAssets, asset)
+
+	return nil
+}
+
+// Create a hostname from the current string without format verification
+func (ctx *ModuleContext) CreateNewAssetAsHostname(hostname string) error {
+	if len(hostname) == 0 {
+		return fmt.Errorf("Hostname cannot be an empty string.")
+	}
+
+	return ctx.CreateNewAsset(hostname, assets.AssetTypes["hostname"])
+}
+
+// Create an IP from the current string without format verification
+func (ctx *ModuleContext) CreateNewAssetAsIP(ip string) error {
+	if len(ip) == 0 {
+		return fmt.Errorf("IP cannot be an empty string")
+	}
+
+	return ctx.CreateNewAsset(ip, assets.AssetTypes["ip"])
+}
+
+// Create a URL from the current string without format verification
+func (ctx *ModuleContext) CreateNewAssetAsURL(url string) error {
+	if len(url) == 0 {
+		return fmt.Errorf("URL cannot be an empty string")
+	}
+
+	return ctx.CreateNewAsset(url, assets.AssetTypes["url"])
 }
 
 func (ctx *ModuleContext) getDefaultHTTPOptions() *HTTPOptions {

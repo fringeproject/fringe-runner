@@ -1,6 +1,7 @@
 package common
 
 import (
+	"encoding/base64"
 	"fmt"
 	"net"
 	"regexp"
@@ -128,4 +129,14 @@ func IsHostname(host string) bool {
 
 func IsURL(url string) bool {
 	return strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://")
+}
+
+func GetBasicAuthHeader(username string, password string) HTTPHeader {
+	auth := username + ":" + password
+	value := "Basic " + base64.StdEncoding.EncodeToString([]byte(auth))
+
+	return HTTPHeader{
+		Name:  "Authorization",
+		Value: value,
+	}
 }

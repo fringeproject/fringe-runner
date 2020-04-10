@@ -8,6 +8,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/helloworld"
 	"github.com/fringeproject/fringe-runner/modules/kafka"
 	"github.com/fringeproject/fringe-runner/modules/kubernetes"
+	"github.com/fringeproject/fringe-runner/modules/nmap"
 
 	"github.com/fringeproject/fringe-runner/session"
 )
@@ -20,4 +21,5 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(helloworld.NewHelloWorld())
 	sess.RegisterModule(kafka.NewKafkaAPI())
 	sess.RegisterModule(kubernetes.NewKubernetesAPI())
+	sess.RegisterModule(nmap.NewNmap())
 }

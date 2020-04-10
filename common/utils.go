@@ -109,6 +109,16 @@ func IsIPv4(rawString string) bool {
 	return true
 }
 
+func CleanHostname(hostname string) string {
+	hostname = strings.ToLower(hostname)
+
+	hostname = strings.TrimPrefix(hostname, "*.")
+	hostname = strings.TrimPrefix(hostname, ".")
+	hostname = strings.TrimSuffix(hostname, ".")
+
+	return hostname
+}
+
 func IsHostname(host string) bool {
 	host = strings.Trim(host, " ")
 

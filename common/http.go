@@ -92,7 +92,7 @@ func NewHTTPClient(c context.Context, opt *HTTPOptions) (*HTTPClient, error) {
 			MaxIdleConnsPerHost: 100,
 			TLSClientConfig: &tls.Config{
 				MinVersion:         tls.VersionTLS10,
-				InsecureSkipVerify: opt.VerifyCert,
+				InsecureSkipVerify: !opt.VerifyCert,
 			},
 			Dial: SecureDial,
 		},

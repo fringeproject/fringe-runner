@@ -1,6 +1,7 @@
 package common
 
 import (
+	"strconv"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -129,11 +130,18 @@ func (ctx *ModuleContext) CreateNewAssetAsURL(url string) error {
 }
 
 func (ctx *ModuleContext) GetDefaultHTTPOptions() *HTTPOptions {
+	proxy, _ := ctx.GetConfigurationValue("HTTP_PROXY")
+	verify, _ := ctx.GetConfigurationValue("VERIFY_CERT")
+	verifyCert, err := strconv.ParseBool(verify)
+	if err != nil {
+		verifyCert = true
+	}
+
 	opts := HTTPOptions{
-		Proxy:          "",
+		Proxy:          proxy,
 		Timeout:        time.Second * 4,
 		FollowRedirect: true,
-		VerifyCert:     true,
+		VerifyCert:     verifyCert,
 		Headers:        make([]HTTPHeader, 0),
 	}
 

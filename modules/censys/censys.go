@@ -77,10 +77,12 @@ func (m *Censys) Run(ctx *common.ModuleContext) error {
 	}
 
 	// Add the Autonomous System name as a tag for the IP
-	err = ctx.CreateNewAsset("tag:"+censysResponse.AutonomousSystem.Name, assets.AssetTypes["raw"])
-	if err != nil {
-		logrus.Debug(err)
-		logrus.Warn("Could not create tag.")
+	if len(censysResponse.AutonomousSystem.Name) > 0 {
+		err = ctx.CreateNewAsset("tag:"+censysResponse.AutonomousSystem.Name, assets.AssetTypes["raw"])
+		if err != nil {
+			logrus.Debug(err)
+			logrus.Warn("Could not create tag.")
+		}
 	}
 
 	// Add open ports to the IP

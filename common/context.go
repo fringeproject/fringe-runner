@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -29,6 +30,17 @@ func NewModuleContext(asset string) (*ModuleContext, error) {
 	}
 
 	return &ctx, nil
+}
+
+// Get a configuration variable for the module
+func (ctx *ModuleContext) GetConfigurationValue(key string) (string, error) {
+	value, exist := os.LookupEnv(key)
+
+	if !exist {
+		return "", fmt.Errorf("Configuration variable %s is not set.", key)
+	} else {
+		return value, nil
+	}
 }
 
 // Get the current asset as a raw string

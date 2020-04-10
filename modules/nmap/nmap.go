@@ -78,8 +78,13 @@ func (m *Nmap) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	// TODO: set nmap as a variable
-	nmapPath := "nmap"
+	// Get the nmap path from the configuration. If it's not set, then use the
+	// nmap command from the PATH
+	nmapPath, err := ctx.GetConfigurationValue("NMAP_PATH")
+	if err != nil {
+		nmapPath = "nmap"
+	}
+
 	args := []string{
 		// "--top-ports", "20", // Use the "Top 20 most scanned ports"
 		// Use the top 20 ports and add some customs

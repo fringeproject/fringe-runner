@@ -10,7 +10,19 @@ Fringe runner is written in Go.
 
 ## How to use
 
-### module
+### Configuration
+
+Fringe-Runner uses environment variables as configuration. It's possible to
+create a `.env` in the current directory. This file will be loaded at the startup.
+
+```
+LOG_LEVEL=<debug/info/...>
+HTTP_PROXY=<proxy URL>
+VERIFY_CERT=<true/false>
+```
+
+
+### Module
 
 This command interacts with the fringe modules.
 

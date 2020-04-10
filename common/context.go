@@ -1,7 +1,6 @@
 package common
 
 import (
-	"strconv"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -9,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/sirupsen/logrus"

@@ -20,8 +20,7 @@ type shodanAPIResponse struct {
 }
 
 func NewShodan() *Shodan {
-	mod := &Shodan{
-	}
+	mod := &Shodan{}
 
 	return mod
 }

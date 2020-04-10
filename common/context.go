@@ -128,7 +128,7 @@ func (ctx *ModuleContext) CreateNewAssetAsURL(url string) error {
 	return ctx.CreateNewAsset(url, assets.AssetTypes["url"])
 }
 
-func (ctx *ModuleContext) getDefaultHTTPOptions() *HTTPOptions {
+func (ctx *ModuleContext) GetDefaultHTTPOptions() *HTTPOptions {
 	opts := HTTPOptions{
 		Proxy:          "",
 		Timeout:        time.Second * 4,
@@ -143,7 +143,7 @@ func (ctx *ModuleContext) getDefaultHTTPOptions() *HTTPOptions {
 func (ctx *ModuleContext) HttpRequest(method string, target string, data io.Reader, opts *HTTPOptions) (*int, *[]byte, *http.Header, error) {
 	// If the HTTPOptions is not set, then use the default one
 	if opts == nil {
-		opts = ctx.getDefaultHTTPOptions()
+		opts = ctx.GetDefaultHTTPOptions()
 	}
 
 	// Send the request so we need the create the client then do the request
@@ -174,7 +174,7 @@ func (ctx *ModuleContext) HTTPRequestJson(method string, target string, request 
 
 	// If the HTTPOptions is not set, then use the default one
 	if opts == nil {
-		opts = ctx.getDefaultHTTPOptions()
+		opts = ctx.GetDefaultHTTPOptions()
 	}
 
 	// Set the headers

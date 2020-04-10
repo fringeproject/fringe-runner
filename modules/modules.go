@@ -2,6 +2,7 @@ package modules
 
 import (
 	"github.com/fringeproject/fringe-runner/modules/awss3"
+	"github.com/fringeproject/fringe-runner/modules/censys"
 	"github.com/fringeproject/fringe-runner/modules/crtsh"
 	"github.com/fringeproject/fringe-runner/modules/docker"
 	"github.com/fringeproject/fringe-runner/modules/elasticsearch"
@@ -18,6 +19,7 @@ import (
 
 func LoadModules(sess *session.Session) {
 	sess.RegisterModule(awss3.NewAWSS3())
+	sess.RegisterModule(censys.NewCensys())
 	sess.RegisterModule(crtsh.NewCrtsh())
 	sess.RegisterModule(docker.NewDockerAPI())
 	sess.RegisterModule(elasticsearch.NewElasticSearchAPI())

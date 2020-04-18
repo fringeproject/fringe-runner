@@ -11,6 +11,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/kafka"
 	"github.com/fringeproject/fringe-runner/modules/kubernetes"
 	"github.com/fringeproject/fringe-runner/modules/nmap"
+	"github.com/fringeproject/fringe-runner/modules/securitytrails"
 	"github.com/fringeproject/fringe-runner/modules/shodan"
 	"github.com/fringeproject/fringe-runner/modules/sslstriper"
 	"github.com/fringeproject/fringe-runner/modules/wayback"
@@ -29,6 +30,7 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(kafka.NewKafkaAPI())
 	sess.RegisterModule(kubernetes.NewKubernetesAPI())
 	sess.RegisterModule(nmap.NewNmap())
+	sess.RegisterModule(securitytrails.NewSecurityTrails())
 	sess.RegisterModule(shodan.NewShodan())
 	sess.RegisterModule(sslstriper.NewSSLStriper())
 	sess.RegisterModule(wayback.NewWayback())

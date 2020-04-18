@@ -15,6 +15,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/securitytrails"
 	"github.com/fringeproject/fringe-runner/modules/shodan"
 	"github.com/fringeproject/fringe-runner/modules/sslstriper"
+	"github.com/fringeproject/fringe-runner/modules/sublist3r"
 	"github.com/fringeproject/fringe-runner/modules/threatcrowd"
 	"github.com/fringeproject/fringe-runner/modules/urlscan"
 	"github.com/fringeproject/fringe-runner/modules/wayback"
@@ -37,6 +38,7 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(securitytrails.NewSecurityTrails())
 	sess.RegisterModule(shodan.NewShodan())
 	sess.RegisterModule(sslstriper.NewSSLStriper())
+	sess.RegisterModule(sublist3r.NewSublist3r())
 	sess.RegisterModule(threatcrowd.NewThreatCrowd())
 	sess.RegisterModule(urlscan.NewURLScan())
 	sess.RegisterModule(wayback.NewWayback())

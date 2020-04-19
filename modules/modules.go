@@ -2,6 +2,7 @@ package modules
 
 import (
 	"github.com/fringeproject/fringe-runner/modules/awss3"
+	"github.com/fringeproject/fringe-runner/modules/bufferover"
 	"github.com/fringeproject/fringe-runner/modules/censys"
 	"github.com/fringeproject/fringe-runner/modules/certspotter"
 	"github.com/fringeproject/fringe-runner/modules/crtsh"
@@ -28,6 +29,7 @@ import (
 
 func LoadModules(sess *session.Session) {
 	sess.RegisterModule(awss3.NewAWSS3())
+	sess.RegisterModule(bufferover.NewBufferOver())
 	sess.RegisterModule(censys.NewCensys())
 	sess.RegisterModule(certspotter.NewCertSpotter())
 	sess.RegisterModule(crtsh.NewCrtsh())

@@ -5,6 +5,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/censys"
 	"github.com/fringeproject/fringe-runner/modules/certspotter"
 	"github.com/fringeproject/fringe-runner/modules/crtsh"
+	"github.com/fringeproject/fringe-runner/modules/dnsdumpster"
 	"github.com/fringeproject/fringe-runner/modules/docker"
 	"github.com/fringeproject/fringe-runner/modules/elasticsearch"
 	"github.com/fringeproject/fringe-runner/modules/hackertarget"
@@ -30,6 +31,7 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(censys.NewCensys())
 	sess.RegisterModule(certspotter.NewCertSpotter())
 	sess.RegisterModule(crtsh.NewCrtsh())
+	sess.RegisterModule(dnsdumpster.NewDnsdumpster())
 	sess.RegisterModule(docker.NewDockerAPI())
 	sess.RegisterModule(elasticsearch.NewElasticSearchAPI())
 	sess.RegisterModule(hackertarget.NewHackerTarget())

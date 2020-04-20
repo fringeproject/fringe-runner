@@ -115,7 +115,7 @@ func newModuleCommand() *ModuleCommand {
 
 // Register the command
 func init() {
-	common.RegisterCommand("module", "Use fringe modules", newModuleCommand(), []cli.Flag{
+	common.RegisterCommand("module", "Uses Fringe modules manually", newModuleCommand(), []cli.Flag{
 		&cli.BoolFlag{
 			Name:    "list",
 			Aliases: []string{"l"},

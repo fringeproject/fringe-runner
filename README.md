@@ -26,13 +26,13 @@ VERIFY_CERT=<true/false>
 
 This command interacts with the fringe modules.
 
-You can list the modules with the `-l/--list` argument:
+You can list the modules with `-l/--list`:
 
 ```bash
 fringe-runner module --list | jq
 ```
 
-You can execute a module manually with the following command:
+You can execute a module manually `-e/--exec`:
 
 ```bash
 fringe-runner module --exec <module_slug> <asset_value>

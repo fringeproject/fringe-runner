@@ -10,7 +10,6 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/docker"
 	"github.com/fringeproject/fringe-runner/modules/elasticsearch"
 	"github.com/fringeproject/fringe-runner/modules/hackertarget"
-	"github.com/fringeproject/fringe-runner/modules/helloworld"
 	"github.com/fringeproject/fringe-runner/modules/ipinfo"
 	"github.com/fringeproject/fringe-runner/modules/kafka"
 	"github.com/fringeproject/fringe-runner/modules/kubernetes"
@@ -37,7 +36,6 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(docker.NewDockerAPI())
 	sess.RegisterModule(elasticsearch.NewElasticSearchAPI())
 	sess.RegisterModule(hackertarget.NewHackerTarget())
-	sess.RegisterModule(helloworld.NewHelloWorld())
 	sess.RegisterModule(ipinfo.NewIPInfo())
 	sess.RegisterModule(kafka.NewKafkaAPI())
 	sess.RegisterModule(kubernetes.NewKubernetesAPI())

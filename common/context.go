@@ -12,22 +12,20 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type ModuleContext struct {
-	Asset     assets.Asset
-	NewAssets []assets.Asset
+	Asset     Asset
+	NewAssets []Asset
 }
 
 func NewModuleContext(asset string) (*ModuleContext, error) {
 	ctx := ModuleContext{
-		Asset: assets.Asset{
+		Asset: Asset{
 			Value: asset,
 			Type:  "",
 		},
-		NewAssets: make([]assets.Asset, 0),
+		NewAssets: make([]Asset, 0),
 	}
 
 	return &ctx, nil
@@ -92,8 +90,8 @@ func (ctx *ModuleContext) GetAssetAsURL() (string, error) {
 }
 
 // Create a new asset from the module execution
-func (ctx *ModuleContext) CreateNewAsset(assetValue string, assetType assets.Type) error {
-	asset := assets.Asset{
+func (ctx *ModuleContext) createNewAsset(assetValue string, assetType AssetType) error {
+	asset := Asset{
 		Value: assetValue,
 		Type:  assetType,
 	}
@@ -102,13 +100,18 @@ func (ctx *ModuleContext) CreateNewAsset(assetValue string, assetType assets.Typ
 	return nil
 }
 
+// Create a raw asset
+func (ctx *ModuleContext) CreateNewAssetAsRaw(raw string) error {
+	return ctx.createNewAsset(raw, AssetTypes["raw"])
+}
+
 // Create a hostname from the current string without format verification
 func (ctx *ModuleContext) CreateNewAssetAsHostname(hostname string) error {
 	if len(hostname) == 0 {
 		return fmt.Errorf("Hostname cannot be an empty string.")
 	}
 
-	return ctx.CreateNewAsset(hostname, assets.AssetTypes["hostname"])
+	return ctx.createNewAsset(hostname, AssetTypes["hostname"])
 }
 
 // Create an IP from the current string without format verification
@@ -117,7 +120,7 @@ func (ctx *ModuleContext) CreateNewAssetAsIP(ip string) error {
 		return fmt.Errorf("IP cannot be an empty string")
 	}
 
-	return ctx.CreateNewAsset(ip, assets.AssetTypes["ip"])
+	return ctx.createNewAsset(ip, AssetTypes["ip"])
 }
 
 // Create a URL from the current string without format verification
@@ -126,7 +129,7 @@ func (ctx *ModuleContext) CreateNewAssetAsURL(url string) error {
 		return fmt.Errorf("URL cannot be an empty string")
 	}
 
-	return ctx.CreateNewAsset(url, assets.AssetTypes["url"])
+	return ctx.createNewAsset(url, AssetTypes["url"])
 }
 
 func (ctx *ModuleContext) GetDefaultHTTPOptions() *HTTPOptions {

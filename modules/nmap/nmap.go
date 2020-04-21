@@ -10,7 +10,6 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type Nmap struct {
@@ -121,7 +120,7 @@ func (m *Nmap) Run(ctx *common.ModuleContext) error {
 				if port.State.State == "open" {
 					portMsg := fmt.Sprintf("Port %d is open with service (%s)", port.PortId, port.Service.Name)
 
-					err = ctx.CreateNewAsset(portMsg, assets.AssetTypes["raw"])
+					err = ctx.CreateNewAssetAsRaw("port:" + portMsg)
 					if err != nil {
 						logrus.Debug(err)
 						logrus.Warn("Could not create vulnerability.")

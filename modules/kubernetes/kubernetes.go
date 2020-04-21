@@ -6,7 +6,6 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type KubernetesAPI struct {
@@ -52,7 +51,7 @@ func (m *KubernetesAPI) Run(ctx *common.ModuleContext) error {
 		}
 
 		if *statusCode == http.StatusOK {
-			err = ctx.CreateNewAsset("Kubernetes API is exposed.", assets.AssetTypes["raw"])
+			err = ctx.CreateNewAssetAsRaw("Kubernetes API is exposed.")
 			if err != nil {
 				logrus.Debug(err)
 				logrus.Warn("Could not create vulnerability.")

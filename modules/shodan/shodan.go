@@ -9,7 +9,6 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type Shodan struct {
@@ -71,7 +70,7 @@ func (m *Shodan) Run(ctx *common.ModuleContext) error {
 	for _, port := range shodanResponse.Ports {
 		portMsg := fmt.Sprintf("Port %d seems to be open with service.", port)
 
-		err = ctx.CreateNewAsset(portMsg, assets.AssetTypes["raw"])
+		err = ctx.CreateNewAssetAsRaw(portMsg)
 		if err != nil {
 			logrus.Debug(err)
 			logrus.Warn("Could not create vulnerability.")

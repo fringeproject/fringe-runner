@@ -7,7 +7,6 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type KafkaAPI struct {
@@ -55,7 +54,7 @@ func (m *KafkaAPI) Run(ctx *common.ModuleContext) error {
 		}
 
 		if *statusCode == http.StatusOK && strings.Contains(string(*body), "kafka_cluster_id") {
-			err = ctx.CreateNewAsset("Kafka REST interface is exposed.", assets.AssetTypes["raw"])
+			err = ctx.CreateNewAssetAsRaw("Kafka REST interface is exposed.")
 			if err != nil {
 				logrus.Debug(err)
 				logrus.Warn("Could not create vulnerability.")

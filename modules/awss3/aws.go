@@ -9,7 +9,6 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type AWSS3 struct {
@@ -117,7 +116,7 @@ func (m *AWSS3) Run(ctx *common.ModuleContext) error {
 	}
 
 	if isBucket {
-		err = ctx.CreateNewAsset("AWS S3 bucket is open", assets.AssetTypes["raw"])
+		err = ctx.CreateNewAssetAsRaw("AWS S3 bucket is open")
 		if err != nil {
 			err = fmt.Errorf("Could not create vulnerability.")
 			logrus.Warn(err)

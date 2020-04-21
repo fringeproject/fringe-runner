@@ -53,6 +53,7 @@ func (s *ModuleCommand) executeModule() error {
 	}
 
 	// Create a module context for the execution
+	// TODO: use `common.Asset` instead of a raw string
 	ctx, err := common.NewModuleContext(asset)
 	if err != nil {
 		logrus.Warn("Cannot crate module context.")

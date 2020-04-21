@@ -7,7 +7,6 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type ElasticSearchAPI struct {
@@ -54,7 +53,7 @@ func (m *ElasticSearchAPI) Run(ctx *common.ModuleContext) error {
 		}
 
 		if *statusCode == http.StatusOK {
-			err = ctx.CreateNewAsset("An unauthenticated ElasticSearch database is exposed.", assets.AssetTypes["raw"])
+			err = ctx.CreateNewAssetAsRaw("An unauthenticated ElasticSearch database is exposed.")
 			if err != nil {
 				logrus.Debug(err)
 				logrus.Warn("Could not create vulnerability.")
@@ -63,7 +62,7 @@ func (m *ElasticSearchAPI) Run(ctx *common.ModuleContext) error {
 			authenticateHeader := strings.ToLower((*headers).Get("WWW-Authenticate"))
 
 			if strings.Contains(authenticateHeader, "elasticsearch") {
-				err = ctx.CreateNewAsset("An authenticated ElasticSearch database is exposed.", assets.AssetTypes["raw"])
+				err = ctx.CreateNewAssetAsRaw("An authenticated ElasticSearch database is exposed.")
 				if err != nil {
 					logrus.Debug(err)
 					logrus.Warn("Could not create vulnerability.")

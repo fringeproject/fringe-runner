@@ -8,7 +8,6 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type Censys struct {
@@ -78,7 +77,7 @@ func (m *Censys) Run(ctx *common.ModuleContext) error {
 
 	// Add the Autonomous System name as a tag for the IP
 	if len(censysResponse.AutonomousSystem.Name) > 0 {
-		err = ctx.CreateNewAsset("tag:"+censysResponse.AutonomousSystem.Name, assets.AssetTypes["raw"])
+		err = ctx.CreateNewAssetAsRaw("tag:" + censysResponse.AutonomousSystem.Name)
 		if err != nil {
 			logrus.Debug(err)
 			logrus.Warn("Could not create tag.")
@@ -89,7 +88,7 @@ func (m *Censys) Run(ctx *common.ModuleContext) error {
 	for _, port := range censysResponse.Ports {
 		portMsg := fmt.Sprintf("Port %d seems to be open with service.", port)
 
-		err = ctx.CreateNewAsset(portMsg, assets.AssetTypes["raw"])
+		err = ctx.CreateNewAssetAsRaw(portMsg)
 		if err != nil {
 			logrus.Debug(err)
 			logrus.Warn("Could not create vulnerability.")

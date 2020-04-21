@@ -7,7 +7,6 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fringeproject/fringe-runner/common"
-	"github.com/fringeproject/fringe-runner/common/assets"
 )
 
 type IPInfoResponse struct {
@@ -68,7 +67,7 @@ func (m *IPInfo) Run(ctx *common.ModuleContext) error {
 	}
 
 	if len(ipinfoResponse.Loc) > 0 {
-		err = ctx.CreateNewAsset("loc:"+ipinfoResponse.Loc, assets.AssetTypes["raw"])
+		err = ctx.CreateNewAssetAsRaw("loc:" + ipinfoResponse.Loc)
 		if err != nil {
 			logrus.Info("Something went wrong creating the new asset.")
 			logrus.Debug(err)

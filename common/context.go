@@ -19,12 +19,9 @@ type ModuleContext struct {
 	NewAssets []Asset
 }
 
-func NewModuleContext(asset string) (*ModuleContext, error) {
+func NewModuleContext(asset Asset) (*ModuleContext, error) {
 	ctx := ModuleContext{
-		Asset: Asset{
-			Value: asset,
-			Type:  "",
-		},
+		Asset:     asset,
 		NewAssets: make([]Asset, 0),
 	}
 

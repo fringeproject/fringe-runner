@@ -42,7 +42,10 @@ func (s *ModuleCommand) executeModule() error {
 	}
 
 	moduleSlug := s.context.Args().Get(0)
-	asset := s.context.Args().Get(1)
+	asset := common.Asset{
+		Value: s.context.Args().Get(1),
+		Type:  "",
+	}
 
 	// Get the module from the slug
 	module, err := s.session.Module(moduleSlug)

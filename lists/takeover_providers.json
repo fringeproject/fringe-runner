@@ -1,0 +1,193 @@
+[
+    {
+        "name": "Airee",
+        "cname": [
+            "^cdn.airee.ru$"
+        ],
+        "fingerprint": []
+    },
+    {
+        "name": "AWS",
+        "cname": [
+            "^[a-z0-9\\.\\-]{0,63}\\.?s3.amazonaws\\.com$",
+            "^[a-z0-9\\.\\-]{3,63}\\.s3-website[\\.-](eu|ap|us|ca|sa|cn)-\\w{2,14}-\\d{1,2}\\.amazonaws.com(\\.cn)?$",
+            "^[a-z0-9\\.\\-]{3,63}\\.s3[\\.-](eu|ap|us|ca|sa)-\\w{2,14}-\\d{1,2}\\.amazonaws.com$",
+            "^[a-z0-9\\.\\-]{3,63}\\.s3.dualstack\\.(eu|ap|us|ca|sa)-\\w{2,14}-\\d{1,2}\\.amazonaws.com$"
+        ],
+        "fingerprint": ["NoSuchBucket", "The specified bucket does not exist"]
+    },
+    {
+        "name": "Bitbucket",
+        "cname": ["bitbucket.org$"],
+        "fingerprint": ["The page you have requested does not exist"]
+    },
+    {
+        "name": "Campaign Monitor",
+        "cname": [
+            "createsend.com$",
+            "name.createsend.com$"
+        ],
+        "fingerprint": [
+            "Double check the URL",
+            "<strong>Trying to access your account?</strong>"
+        ]
+    },
+    {
+        "name": "Cargo Collective",
+        "cname": ["cargocollective.com$"],
+        "fingerprint": [
+            "404 Not Found",
+            "If you're moving your domain away from Cargo you must make this configuration through your registrar's DNS control panel."
+        ]
+    },
+    {
+        "name": "Feedpress",
+        "cname": ["^redirect.feedpress.me$"],
+        "fingerprint": ["The feed has not been found."]
+    },
+    {
+        "name": "Fly.io",
+        "cname": [],
+        "fingerprint": []
+    },
+    {
+        "name": "Ghost",
+        "cname": ["ghost.io$"],
+        "fingerprint": ["The thing you were looking for is no longer here"]
+    },
+    {
+        "name": "Github",
+        "cname": ["^[a-z0-9\\.\\-]{0,70}\\.?github\\.io$"],
+        "fingerprint": [
+            "There isn't a GitHub Pages site here."
+        ]
+    },
+    {
+        "name": "HatenaBlog",
+        "cname": [],
+        "fingerprint": []
+    },
+    {
+        "name": "Help Juice",
+        "cname": ["helpjuice.com$"],
+        "fingerprint": ["We could not find what you're looking for."]
+    },
+    {
+        "name": "Help Scout",
+        "cname": ["helpscoutdocs.com$"],
+        "fingerprint": ["No settings were found for this company:"]
+    },
+    {
+        "name": "Heroku",
+        "cname": [
+            "herokudns.com",
+            "herokussl.com",
+            "herokuapp.com"
+        ],
+        "fingerprint": [
+            "There's nothing here, yet.",
+            "herokucdn.com/error-pages/no-such-app.html",
+            "<title>No such app</title>"
+        ]
+    },
+    {
+        "name": "Intercom",
+        "cname": ["custom.intercom.help$"],
+        "fingerprint": [
+            "This page is reserved for artistic dogs.",
+            "<h1 class=\"headline\"Uh oh. That page doesn't exist.</h1>"
+        ]
+    },
+    {
+        "name": "JetBrains",
+        "cname": ["myjetbrains.com$"],
+        "fingerprint": ["is not a registered InCloud YouTrack."]
+    },
+    {
+        "name": "Kinsta",
+        "cname": [],
+        "fingerprint": []
+    },
+    {
+        "name": "LaunchRock",
+        "cname": [],
+        "fingerprint": ["It looks like you may have taken a wrong turn somewhere. Don't worry...it happens to all of us."]
+    },
+    {
+        "name": "Microsoft Azure",
+        "cname": [
+            ".azurewebsites.net$",
+            ".cloudapp.net$",
+            ".cloudapp.azure.com$",
+            ".trafficmanager.net$",
+            ".blob.core.windows.net$",
+            ".azure-api.net$",
+            ".azurehdinsight.net$",
+            ".azureedge.net$"
+        ],
+        "fingerprint": ["404 Web Site not found"]
+    },
+    {
+        "name": "pantheon",
+        "cname": ["pantheonsite.io$"],
+        "fingerprint": ["The gods are wise", "The gods are wise, but do not know of the site which you seek."]
+    },
+    {
+        "service": "Readme.io",
+        "cname": [
+            "readme.io"
+        ],
+        "fingerprint": [
+            "Project doesnt exist... yet!"
+        ]
+    },
+    {
+        "name": "Shopify",
+        "cname": ["myshopify.com"],
+        "fingerprint": [
+            "Sorry, this shop is currently unavailable.",
+            "Only one step left!"
+        ]
+    },
+    {
+        "name": "StatusPage",
+        "cname": ["statuspage.io"],
+        "fingerprint": [
+            "Better Status Communication",
+            "You are being <a href=\"https://www.statuspage.io\">redirected"
+        ]
+    },
+    {
+        "name": "Strikingly",
+        "cname": [],
+        "fingerprint": []
+    },
+    {
+        "name": "Surge.sh",
+        "cname": ["surge.sh"],
+        "fingerprint": ["project not found"]
+    },
+    {
+        "name": "Tumblr",
+        "cname": ["tumblr.com"],
+        "fingerprint": [
+            "There's nothing here.",
+            "Whatever you were looking for doesn't currently exist at this address."
+        ]
+    },
+    {
+        "name": "Uptimerobot",
+        "cname": [],
+        "fingerprint": []
+    },
+    {
+        "name": "UserVoice",
+        "cname": ["uservoice.com"],
+        "fingerprint": ["This UserVoice subdomain is currently available!"]
+    },
+    {
+        "name": "Wordpress",
+        "cname": ["wordpress.com"],
+        "fingerprint": ["Do you want to register"]
+    }
+]

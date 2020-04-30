@@ -1,14 +1,22 @@
 package common
 
 import (
+	"bytes"
 	"context"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"time"
+)
+
+const (
+	ContentTypeHeaderName = "Content-Type"
+	AcceptHeaderName      = "Accept"
+	ApplicationJSON       = "application/json"
 )
 
 // Represents options for the HTTP client
@@ -138,6 +146,70 @@ func (client *HTTPClient) Post(target, host, cookie string, data io.Reader) (*in
 
 func (client *HTTPClient) Put(target, host, cookie string, data io.Reader) (*int, *[]byte, *http.Header, error) {
 	return client.DoRequest(http.MethodPut, target, host, cookie, data)
+}
+
+func (client *HTTPClient) DoJson(method, target, host, cookie string, request interface{}, response interface{}) (*int, *[]byte, *http.Header, error) {
+	// As we need to add 2 custom headers, first we check the field is not nil
+	if client.headers == nil {
+		client.headers = make([]HTTPHeader, 0)
+	}
+
+	var requestBody io.Reader
+	if request != nil {
+		requestBodyRequest, err := json.Marshal(request)
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		requestBody = bytes.NewReader(requestBodyRequest)
+
+		foundContentType := false
+		for _, header := range client.headers {
+			if header.Name == ContentTypeHeaderName {
+				foundContentType = true
+				break
+			}
+		}
+
+		if !foundContentType {
+			client.headers = append(client.headers, HTTPHeader{Name: ContentTypeHeaderName, Value: ApplicationJSON})
+		}
+	}
+
+	// Check if the "Accept" header is set. We want to receive a JSON payload
+	// then we need to set, as default, the value `application/json`
+	if response != nil {
+		foundAccept := false
+		for _, header := range client.headers {
+			if header.Name == AcceptHeaderName {
+				foundAccept = true
+				break
+			}
+		}
+
+		if !foundAccept {
+			client.headers = append(client.headers, HTTPHeader{Name: AcceptHeaderName, Value: ApplicationJSON})
+		}
+	}
+
+	// Send the payload
+	statusCode, responseBody, headers, err := client.DoRequest(method, target, host, cookie, requestBody)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+
+	// We've got a JSON response, let's deserialize it
+	if response != nil {
+		decoder := json.NewDecoder(bytes.NewReader(*responseBody))
+		err = decoder.Decode(response)
+
+		if err != nil {
+			// return response info if we want to do something with it even if the
+			// decoding failed
+			return statusCode, responseBody, headers, err
+		}
+	}
+
+	return statusCode, responseBody, headers, nil
 }
 
 // Make the request and perform it based on the client options and arguments.

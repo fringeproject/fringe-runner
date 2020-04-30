@@ -139,6 +139,7 @@ func (ctx *ModuleContext) GetDefaultHTTPOptions() *HTTPOptions {
 		FollowRedirect: true,
 		VerifyCert:     verifyCert,
 		Headers:        make([]HTTPHeader, 0),
+		WhiteListIP:    make([]string, 0),
 	}
 
 	return &opts

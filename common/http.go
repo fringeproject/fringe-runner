@@ -37,6 +37,8 @@ type HTTPOptions struct {
 	// Do we need to check the SSL/TLS server certificate. Can be usefull when
 	// you use a custom proxy like Burp
 	VerifyCert bool
+	// White list for IP addresses
+	WhiteListIP []string
 }
 
 // Represents a (custom) HTTP header
@@ -90,6 +92,16 @@ func NewHTTPClient(c context.Context, opt *HTTPOptions) (*HTTPClient, error) {
 		redirectFunc = nil
 	}
 
+	// Generate a dialer to white/black list the IP
+	if opt.WhiteListIP == nil {
+		opt.WhiteListIP = []string{}
+	}
+
+	dialer, err := GenerateDialer(opt.WhiteListIP)
+	if err != nil {
+		return nil, err
+	}
+
 	// Intanciate the HTTP client
 	client.client = &http.Client{
 		Timeout:       opt.Timeout,
@@ -102,7 +114,7 @@ func NewHTTPClient(c context.Context, opt *HTTPOptions) (*HTTPClient, error) {
 				MinVersion:         tls.VersionTLS10,
 				InsecureSkipVerify: !opt.VerifyCert,
 			},
-			Dial: SecureDial,
+			Dial: dialer,
 		},
 	}
 	client.context = c

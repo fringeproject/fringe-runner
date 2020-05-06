@@ -23,6 +23,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/threatcrowd"
 	"github.com/fringeproject/fringe-runner/modules/urlscan"
 	"github.com/fringeproject/fringe-runner/modules/virustotal"
+	"github.com/fringeproject/fringe-runner/modules/wappalyzer"
 	"github.com/fringeproject/fringe-runner/modules/wayback"
 
 	"github.com/fringeproject/fringe-runner/session"
@@ -51,5 +52,6 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(threatcrowd.NewThreatCrowd())
 	sess.RegisterModule(urlscan.NewURLScan())
 	sess.RegisterModule(virustotal.NewVirusTotal())
+	sess.RegisterModule(wappalyzer.NewWappalyzer())
 	sess.RegisterModule(wayback.NewWayback())
 }

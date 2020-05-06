@@ -38,6 +38,17 @@ You can execute a module manually `-e/--exec`:
 fringe-runner module --exec <module_slug> <asset_value>
 ```
 
+### Example
+
+You want to use the `wappalyzer` module on a URL to identify technologies on a
+website:
+
+```bash
+fringe-runner module -e wappalyzer https://fringeproject.com | jq .[].value
+```
+
+This will returns a list of technologies and their versions.
+
 
 ## Modules to fetch assets from publics API
 

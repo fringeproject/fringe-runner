@@ -54,6 +54,7 @@ This will returns a list of technologies and their versions.
 
 Here is a list of module's slugs available to query public resources:
 
+- [`alienvault`](https://alienvault.com)
 - [`bufferover`](https://dns.bufferover.run/)
 - [`certspotter`](https://sslmate.com/certspotter/): API key is not supported yet
 - [`crtsh`](crt.sh/)
@@ -63,5 +64,6 @@ Here is a list of module's slugs available to query public resources:
 - [`shodan`](https://www.shodan.io/): may use an API key sets as `SHODAN_API_KEY`
 - [`sublist3r`](https://github.com/aboul3la/Sublist3r)
 - [`threatcrowd`](https://www.threatcrowd.org/)
+- [`threatminer`](https://www.threatminer.org/)
 - [`urlscan`](https://urlscan.io/)
 - [`virustotal`](https://www.virustotal.com/): use the unofficial API (ui)

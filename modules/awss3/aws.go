@@ -122,6 +122,13 @@ func (m *AWSS3) Run(ctx *common.ModuleContext) error {
 			logrus.Warn(err)
 			return err
 		}
+
+		err = ctx.AddTag("awd-s3")
+		if err != nil {
+			err = fmt.Errorf("Could not add tag to asset.")
+			logrus.Warn(err)
+			return err
+		}
 	}
 
 	return nil

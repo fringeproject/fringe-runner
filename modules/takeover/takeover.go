@@ -96,6 +96,11 @@ func (m *TakeOver) Run(ctx *common.ModuleContext) error {
 							if err != nil {
 								logrus.Info("Could not create vulnerability.")
 							}
+
+							err = ctx.AddTag("take-over")
+							if err != nil {
+								logrus.Info("Could not add tag.")
+							}
 						}
 					}
 				}

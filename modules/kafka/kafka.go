@@ -59,6 +59,12 @@ func (m *KafkaAPI) Run(ctx *common.ModuleContext) error {
 				logrus.Debug(err)
 				logrus.Warn("Could not create vulnerability.")
 			}
+
+			err = ctx.AddTag("kafka")
+			if err != nil {
+				logrus.Debug(err)
+				logrus.Warn("Could not add tag.")
+			}
 		}
 	}
 

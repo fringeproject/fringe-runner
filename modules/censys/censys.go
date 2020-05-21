@@ -77,7 +77,7 @@ func (m *Censys) Run(ctx *common.ModuleContext) error {
 
 	// Add the Autonomous System name as a tag for the IP
 	if len(censysResponse.AutonomousSystem.Name) > 0 {
-		err = ctx.CreateNewAssetAsRaw("tag:" + censysResponse.AutonomousSystem.Name)
+		err = ctx.AddTag(censysResponse.AutonomousSystem.Name)
 		if err != nil {
 			logrus.Debug(err)
 			logrus.Warn("Could not create tag.")

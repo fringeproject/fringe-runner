@@ -58,6 +58,12 @@ func (m *ElasticSearchAPI) Run(ctx *common.ModuleContext) error {
 				logrus.Debug(err)
 				logrus.Warn("Could not create vulnerability.")
 			}
+
+			err = ctx.AddTag("elasticsearch")
+			if err != nil {
+				logrus.Debug(err)
+				logrus.Warn("Could not add tag.")
+			}
 		} else if *statusCode == http.StatusUnauthorized {
 			authenticateHeader := strings.ToLower((*headers).Get("WWW-Authenticate"))
 
@@ -66,6 +72,12 @@ func (m *ElasticSearchAPI) Run(ctx *common.ModuleContext) error {
 				if err != nil {
 					logrus.Debug(err)
 					logrus.Warn("Could not create vulnerability.")
+				}
+
+				err = ctx.AddTag("elasticsearch")
+				if err != nil {
+					logrus.Debug(err)
+					logrus.Warn("Could not add tag.")
 				}
 			}
 		}

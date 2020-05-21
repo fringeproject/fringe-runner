@@ -67,9 +67,9 @@ func (m *IPInfo) Run(ctx *common.ModuleContext) error {
 	}
 
 	if len(ipinfoResponse.Loc) > 0 {
-		err = ctx.CreateNewAssetAsRaw("loc:" + ipinfoResponse.Loc)
+		err = ctx.AddTag("loc:" + ipinfoResponse.Loc)
 		if err != nil {
-			logrus.Info("Something went wrong creating the new asset.")
+			logrus.Info("Could not add tag.")
 			logrus.Debug(err)
 		}
 	}

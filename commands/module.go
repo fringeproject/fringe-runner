@@ -73,8 +73,16 @@ func (s *ModuleCommand) executeModule() error {
 	}
 
 	// Get the new assets and convert to print it as a JSON list
-	assets := ctx.NewAssets
-	moduleJSON, err := json.MarshalIndent(assets, "", "\t")
+	updateJob := common.FringeClientUpdateJobRequest{
+		ID:          "",
+		Status:      common.JOB_STATUS_SUCCESS,
+		Assets:      ctx.NewAssets,
+		Tags:        ctx.NewTags,
+		Description: "",
+		StartedAt:   0,
+		EndedAt:     0,
+	}
+	moduleJSON, err := json.MarshalIndent(updateJob, "", "\t")
 	if err != nil {
 		return fmt.Errorf("Couldn't format the module list to JSON.")
 	}

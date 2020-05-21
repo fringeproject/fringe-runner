@@ -286,7 +286,7 @@ func (m *Wappalyzer) Run(ctx *common.ModuleContext) error {
 	}
 
 	for _, tag := range m.Tags {
-		err = ctx.CreateNewAssetAsRaw(tag)
+		err = ctx.AddTag(tag)
 		if err != nil {
 			logrus.Debug(err)
 			logrus.Warn("Could not create tag.")

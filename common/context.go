@@ -13,12 +13,14 @@ import (
 type ModuleContext struct {
 	Asset     Asset
 	NewAssets []Asset
+	NewTags   []string
 }
 
 func NewModuleContext(asset Asset) (*ModuleContext, error) {
 	ctx := ModuleContext{
 		Asset:     asset,
 		NewAssets: make([]Asset, 0),
+		NewTags:   make([]string, 0),
 	}
 
 	return &ctx, nil
@@ -80,6 +82,17 @@ func (ctx *ModuleContext) GetAssetAsURL() (string, error) {
 	} else {
 		return "", fmt.Errorf("Current data is not a valid url.")
 	}
+}
+
+// Add a tag to the current asset
+func (ctx *ModuleContext) AddTag(tag string) error {
+	if len(tag) == 0 {
+		return fmt.Errorf("Tag cannot be an empty string")
+	}
+
+	ctx.NewTags = AppendIfMissing(ctx.NewTags, tag)
+
+	return nil
 }
 
 // Create a new asset from the module execution

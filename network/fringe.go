@@ -28,20 +28,6 @@ type FringeClient struct {
 	perimeter   string
 }
 
-type FringeClientrModuleListRequest struct {
-	Modules []common.Module `json:"modules"`
-}
-
-type FringeClientrUpdateJobRequest struct {
-	ID          string         `json:"id"`
-	Status      string         `json:"status"`
-	Assets      []common.Asset `json:"datas"`
-	Tags        []string       `json:"tags"`
-	Description string         `json:"description"`
-	StartedAt   int64          `json:"startedAt"`
-	EndedAt     int64          `json:"endedAt"`
-}
-
 func NewFringeClient(coordinator string, id string, token string, perimeter string) (common.RunnerClient, error) {
 
 	// Check if the coordinator is a valid URL and add it's IP to the HTTP whitelist
@@ -96,7 +82,7 @@ func (c *FringeClient) String() string {
 
 func (c *FringeClient) SendModuleList(modules []common.Module) error {
 	url := fmt.Sprintf("%s/perimeters/%s/runners/%s/modules", c.coordinator, c.perimeter, c.id)
-	data := &FringeClientrModuleListRequest{
+	data := &common.FringeClientModuleListRequest{
 		Modules: modules,
 	}
 
@@ -127,9 +113,9 @@ func (c *FringeClient) RequestJob() (*common.Job, error) {
 
 func (c *FringeClient) UpdateJob(job *common.Job, newAssets []common.Asset) error {
 	url := fmt.Sprintf("%s/perimeters/%s/runners/%s/job", c.coordinator, c.perimeter, c.id)
-	data := &FringeClientrUpdateJobRequest{
+	data := &common.FringeClientUpdateJobRequest{
 		ID:          job.ID,
-		Status:      "SU",
+		Status:      common.JOB_STATUS_SUCCESS,
 		Assets:      newAssets,
 		Tags:        []string{},
 		Description: "",

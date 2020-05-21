@@ -101,6 +101,9 @@ func (c *FringeClient) SendModuleList(modules []common.Module) error {
 	}
 
 	statusCode, _, _, err := c.httpClient.DoJson(http.MethodPost, url, "", "", data, nil)
+	if err != nil {
+		return err
+	}
 
 	if *statusCode == 404 {
 		err = fmt.Errorf("The coordinator does not accept the runner calls.")

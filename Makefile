@@ -10,13 +10,16 @@ PKG = github.com/fringeproject/$(PACKAGE_NAME)
 COMMON_PACKAGE_NAMESPACE=$(PKG)/common
 
 # Update common/version.go constants to matchs the current repository status
-GO_LDFLAGS ?= -X $(COMMON_PACKAGE_NAMESPACE).NAME=$(PACKAGE_NAME) -X $(COMMON_PACKAGE_NAMESPACE).VERSION=$(VERSION) \
-			  -X $(COMMON_PACKAGE_NAMESPACE).REVISION=$(REVISION) -X $(COMMON_PACKAGE_NAMESPACE).BUILT=$(BUILT) \
-			  -X $(COMMON_PACKAGE_NAMESPACE).BRANCH=$(BRANCH)
+GO_LDFLAGS ?= -X $(COMMON_PACKAGE_NAMESPACE).NAME=$(PACKAGE_NAME) \
+			  -X $(COMMON_PACKAGE_NAMESPACE).VERSION=$(VERSION) \
+			  -X $(COMMON_PACKAGE_NAMESPACE).REVISION=$(REVISION) \
+			  -X $(COMMON_PACKAGE_NAMESPACE).BUILT=$(BUILT) \
+			  -X $(COMMON_PACKAGE_NAMESPACE).BRANCH=$(BRANCH) \
+			  -X $(COMMON_PACKAGE_NAMESPACE).FRINGE_WORDLIST_FILENAMES=$(ls -m ./lists)
 
 GO_BUILD_OS ?= darwin linux windows
 GO_BUILD_ARCH ?= 386 amd64
-BUILD_FOLDER := ./bin
+BUILD_FOLDER := ./build
 
 
 update:
@@ -46,5 +49,14 @@ build: GOX
 	@mkdir -p $(BUILD_FOLDER); \
 	gox -os="$(GO_BUILD_OS)" -arch="$(GO_BUILD_ARCH)" -ldflags "$(GO_LDFLAGS)" -output="$(BUILD_FOLDER)/$(NAME)-{{.OS}}-{{.Arch}}" $(PKG); \
 	echo "Build done."
+
+install:
+	@go install; \
+	echo "Install done."
+
+upload: build
+	@scp ./ressources/*.{txt,json} fringe:/opt/fringe-static/fringe-runner/ressources/; \
+	scp $(BUILD_FOLDER)/* fringe:/opt/fringe-static/fringe-runner/builds/; \
+	echo "Upload done."
 
 all: clean fmt update lint

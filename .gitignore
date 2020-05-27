@@ -15,7 +15,7 @@
 # vendor/
 
 # build directory
-out/
+build/
 
 # env files
 .env

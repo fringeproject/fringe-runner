@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 )
 
@@ -222,6 +223,32 @@ func (client *HTTPClient) DoJson(method, target, host, cookie string, request in
 	}
 
 	return statusCode, responseBody, headers, nil
+}
+
+func (client *HTTPClient) DownloadFile(method, target, host, cookie, destination string, data io.Reader) (*int, *http.Header, error) {
+	out, err := os.Create(destination)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	resp, err := client.makeRequest(method, target, host, cookie, data)
+	if err != nil {
+		if client.context.Err() == context.Canceled {
+			return nil, nil, nil
+		}
+		return nil, nil, err
+	}
+	defer resp.Body.Close()
+
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		if client.context.Err() == context.Canceled {
+			return nil, nil, nil
+		}
+		return nil, nil, err
+	}
+
+	return &resp.StatusCode, &resp.Header, nil
 }
 
 // Make the request and perform it based on the client options and arguments.

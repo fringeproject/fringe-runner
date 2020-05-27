@@ -259,11 +259,16 @@ func (m *Wappalyzer) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
+	wappalyzerFile, err := common.GetRessourceFile("wappalyzer.json")
+	if err != nil {
+		return err
+	}
+
 	wappalyzer := &WappalyzerFile{}
-	err = common.ReadJSONFile("./lists/wappalyzer.json", wappalyzer)
+	err = common.ReadJSONFile(wappalyzerFile, wappalyzer)
 	if err != nil {
 		logrus.Debug(err)
-		err = fmt.Errorf("Cannot read wappalyzer JSON file. Please, check \"lists/wappalyzer.json\" file.")
+		err = fmt.Errorf("Cannot read wappalyzer JSON file. Please check the ressource file \"wappalyzer.json\".")
 		logrus.Warn(err)
 		return err
 	}

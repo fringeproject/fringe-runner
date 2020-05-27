@@ -44,11 +44,16 @@ func (m *TakeOver) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
+	providerFile, err := common.GetRessourceFile("takeover_providers.json")
+	if err != nil {
+		return err
+	}
+
 	providers := []ServiceProvider{}
-	err = common.ReadJSONFile("./lists/takeover_providers.json", &providers)
+	err = common.ReadJSONFile(providerFile, &providers)
 	if err != nil {
 		logrus.Debug(err)
-		err = fmt.Errorf("Cannot read providers JSON file. Please, check \"lists/takeover_providers.json\" file.")
+		err = fmt.Errorf("Cannot read providers JSON file. Please, check the ressource \"takeover_providers.json\" file.")
 		logrus.Warn(err)
 		return err
 	}

@@ -16,7 +16,7 @@ GO_LDFLAGS ?= -X $(COMMON_PACKAGE_NAMESPACE).NAME=$(PACKAGE_NAME) -X $(COMMON_PA
 
 GO_BUILD_OS ?= darwin linux windows
 GO_BUILD_ARCH ?= 386 amd64
-BUILD_FOLDER := ./out
+BUILD_FOLDER := ./bin
 
 
 update:

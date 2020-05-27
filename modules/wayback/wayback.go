@@ -36,7 +36,7 @@ func RequestPage(ctx *common.ModuleContext, hostname string, page int) ([][]stri
 	var waybackResponse [][]string
 	_, _, _, err := ctx.HTTPRequestJson("GET", url, nil, &waybackResponse, nil)
 	if err != nil {
-		logrus.Warn("Cannot request Wayback.")
+		// logrus.Warn("Cannot request Wayback.")
 		return nil, err
 	}
 

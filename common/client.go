@@ -1,5 +1,9 @@
 package common
 
+import (
+	"encoding/json"
+)
+
 type FringeClientModuleListRequest struct {
 	Modules []Module `json:"modules"`
 }
@@ -26,4 +30,13 @@ type RunnerClient interface {
 	SendModuleList([]Module) error
 	RequestJob() (*Job, error)
 	UpdateJob(*Job, []Asset) error
+}
+
+func (r FringeClientUpdateJobRequest) JSON() string {
+	rJSON, err := json.MarshalIndent(r, "", "\t")
+	if err != nil {
+		return ""
+	}
+
+	return string(rJSON)
 }

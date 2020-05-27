@@ -82,12 +82,8 @@ func (s *ModuleCommand) executeModule() error {
 		StartedAt:   0,
 		EndedAt:     0,
 	}
-	moduleJSON, err := json.MarshalIndent(updateJob, "", "\t")
-	if err != nil {
-		return fmt.Errorf("Couldn't format the module list to JSON.")
-	}
 
-	fmt.Println(string(moduleJSON))
+	fmt.Println(updateJob.JSON())
 
 	return nil
 }

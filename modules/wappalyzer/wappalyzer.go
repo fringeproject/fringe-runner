@@ -259,7 +259,7 @@ func (m *Wappalyzer) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	wappalyzerFile, err := common.GetRessourceFile("wappalyzer.json")
+	wappalyzerFile, err := ctx.GetRessourceFile("wappalyzer.json")
 	if err != nil {
 		return err
 	}

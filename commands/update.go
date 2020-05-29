@@ -10,8 +10,8 @@ import (
 type UpdateCommand struct {
 }
 
-func (s *UpdateCommand) Execute(c *cli.Context) error {
-	err := common.UpdateModuleRessources()
+func (s *UpdateCommand) Execute(c *cli.Context, config *common.FringeConfig) error {
+	err := common.UpdateModuleRessources(config)
 	if err != nil {
 		return err
 	}

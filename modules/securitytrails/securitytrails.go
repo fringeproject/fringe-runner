@@ -40,9 +40,9 @@ func (m *SecurityTrails) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	stAPIKey, err := ctx.GetConfigurationValue("SECURITYTRAILS_API_KEY")
+	stAPIKey, err := ctx.GetConfigurationValue("securitytrails_api_key")
 	if err != nil {
-		err = fmt.Errorf("You must provide a SECURITYTRAILS_API_KEY value to fetch the API.")
+		err = fmt.Errorf("You must provide a securitytrails_api_key value to fetch the API.")
 		return err
 	}
 

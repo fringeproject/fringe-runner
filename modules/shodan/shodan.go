@@ -42,9 +42,9 @@ func (m *Shodan) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	shodanAPIKey, err := ctx.GetConfigurationValue("SHODAN_API_KEY")
+	shodanAPIKey, err := ctx.GetConfigurationValue("shodan_api_key")
 	if err != nil {
-		err = fmt.Errorf("You must provide a SHODAN_API_KEY value to fetch the API.")
+		err = fmt.Errorf("You must provide a shodan_api_key value to fetch the API.")
 		return err
 	}
 

@@ -45,15 +45,15 @@ func (m *Censys) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	censysAPIID, err := ctx.GetConfigurationValue("CENSYS_API_ID")
+	censysAPIID, err := ctx.GetConfigurationValue("censys_api_id")
 	if err != nil {
-		err := fmt.Errorf("You must provide a CENSYS_API_ID value to fetch the API.")
+		err := fmt.Errorf("You must provide a censys_api_id value to fetch the API.")
 		return err
 	}
 
-	CensysAPISecret, err := ctx.GetConfigurationValue("CENSYS_API_SECRET")
+	CensysAPISecret, err := ctx.GetConfigurationValue("censys_api_secret")
 	if err != nil {
-		err := fmt.Errorf("You must provide a CENSYS_API_SECRET value to fetch the API.")
+		err := fmt.Errorf("You must provide a censys_api_secret value to fetch the API.")
 		return err
 	}
 

@@ -18,6 +18,7 @@ import (
 type ServiceCommand struct {
 	context  *cli.Context
 	session  *session.Session
+	config   *common.FringeConfig
 	client   common.RunnerClient
 	jobsChan chan *common.Job
 }
@@ -38,7 +39,7 @@ func (s *ServiceCommand) createWorker(id int) {
 		}
 
 		// Create a module context for the execution
-		ctx, err := common.NewModuleContext(job.Asset)
+		ctx, err := common.NewModuleContext(job.Asset, s.config)
 		if err != nil {
 			logrus.Warn("Cannot crate module context.")
 			logrus.Debug(err)
@@ -92,13 +93,20 @@ func (s *ServiceCommand) fetchNextJob() error {
 }
 
 func (s *ServiceCommand) getRunnerClient() (common.RunnerClient, error) {
-	// Get the runner configuration to instanciate
-	coordinator := os.Getenv("FRINGE_COORDINATOR")
-	id := os.Getenv("FRINGE_ID")
-	token := os.Getenv("FRINGE_TOKEN")
-	perimeter := os.Getenv("FRINGE_PERIMETER")
+	opt := &common.HTTPOptions{
+		Headers:        []common.HTTPHeader{},
+		Timeout:        time.Second * 20,
+		FollowRedirect: true,
+		Proxy:          s.config.Proxy,
+		VerifyCert:     s.config.VerifyCert,
+	}
 
-	client, err := network.NewFringeClient(coordinator, id, token, perimeter)
+	coordinator := s.config.FringeCoordinator
+	perimeter := s.config.FringePerimeter
+	runnerID := s.config.FringeRunnerId
+	ruunerToken := s.config.FringeRunnerToken
+
+	client, err := network.NewFringeClient(coordinator, runnerID, ruunerToken, perimeter, opt)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +115,7 @@ func (s *ServiceCommand) getRunnerClient() (common.RunnerClient, error) {
 }
 
 // Start an infinite loop to request jobs to the coordinator and execute them
-func (s *ServiceCommand) Execute(c *cli.Context) error {
+func (s *ServiceCommand) Execute(c *cli.Context, config *common.FringeConfig) error {
 	// Create a new session that hold the modules
 	sess, err := session.NewSession()
 	if err != nil {
@@ -116,9 +124,10 @@ func (s *ServiceCommand) Execute(c *cli.Context) error {
 	}
 	defer sess.Close()
 
-	// Add the context and the session to the current command for re-use
+	// Add the context, session and config to the current command for re-use
 	s.context = c
 	s.session = sess
+	s.config = config
 
 	// Load Fringe modules in the session
 	modules.LoadModules(s.session)

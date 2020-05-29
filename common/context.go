@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"strconv"
 	"time"
 )
@@ -14,13 +13,15 @@ type ModuleContext struct {
 	Asset     Asset
 	NewAssets []Asset
 	NewTags   []string
+	config    *FringeConfig
 }
 
-func NewModuleContext(asset Asset) (*ModuleContext, error) {
+func NewModuleContext(asset Asset, config *FringeConfig) (*ModuleContext, error) {
 	ctx := ModuleContext{
 		Asset:     asset,
 		NewAssets: make([]Asset, 0),
 		NewTags:   make([]string, 0),
+		config:    config,
 	}
 
 	return &ctx, nil
@@ -28,13 +29,17 @@ func NewModuleContext(asset Asset) (*ModuleContext, error) {
 
 // Get a configuration variable for the module
 func (ctx *ModuleContext) GetConfigurationValue(key string) (string, error) {
-	value, exist := os.LookupEnv(key)
-
-	if !exist {
+	value, ok := ctx.config.ModuleConfiguration[key]
+	if !ok {
 		return "", fmt.Errorf("Configuration variable %s is not set.", key)
-	} else {
-		return value, nil
 	}
+
+	return value, nil
+}
+
+// Get the path for a resource file
+func (ctx *ModuleContext) GetRessourceFile(filename string) (string, error) {
+	return GetRessourceFile(ctx.config, filename)
 }
 
 // Get the current asset as a raw string

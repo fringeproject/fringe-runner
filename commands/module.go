@@ -16,6 +16,7 @@ import (
 type ModuleCommand struct {
 	context *cli.Context
 	session *session.Session
+	config  *common.FringeConfig
 }
 
 func (s *ModuleCommand) listModules() error {
@@ -56,8 +57,7 @@ func (s *ModuleCommand) executeModule() error {
 	}
 
 	// Create a module context for the execution
-	// TODO: use `common.Asset` instead of a raw string
-	ctx, err := common.NewModuleContext(asset)
+	ctx, err := common.NewModuleContext(asset, s.config)
 	if err != nil {
 		logrus.Warn("Cannot crate module context.")
 		logrus.Debug(err)
@@ -88,7 +88,7 @@ func (s *ModuleCommand) executeModule() error {
 	return nil
 }
 
-func (s *ModuleCommand) Execute(c *cli.Context) error {
+func (s *ModuleCommand) Execute(c *cli.Context, config *common.FringeConfig) error {
 	// Create a new session that hold the modules
 	// Even if we don't know the command the user want to pass, we create the
 	// session and load the modules.
@@ -99,9 +99,10 @@ func (s *ModuleCommand) Execute(c *cli.Context) error {
 	}
 	defer sess.Close()
 
-	// Add the context and the session to the current command for re-use
+	// Add the context, session and config to the current command for re-use
 	s.context = c
 	s.session = sess
+	s.config = config
 
 	// Load Fringe modules in the session
 	modules.LoadModules(s.session)

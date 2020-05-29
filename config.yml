@@ -1,0 +1,28 @@
+# Logrus level: debug, info, warning, debug, panic, fatal (default: info)
+log_level: info
+
+# Proxy for HTTP/HTTPS requests (default: "")
+proxy:
+# proxy: http://127.0.0.1:8080
+
+# Verify SSL certificate on HTTPS requests (default: true)
+verify_cert: false
+
+# Set the directory used by the runner to store resources (default: ~/.fringe-runner)
+# home_directory: ~/.fringe-runner
+
+# Client configuration to connect to the backend with the `service` command
+# fringe_coordinator:
+# fringe_perimeter:
+# fringe_runner_id:
+# fringe_runner_token:
+
+# Module configuration
+module_config:
+# - censys_api_id: ""
+# - censys_api_secret: ""
+# - ipinfo_api_key: ""
+# - nmap_path: ""
+# - securitytrails_api_key: ""
+# - shodan_api_key: ""
+# - dns_server: ""

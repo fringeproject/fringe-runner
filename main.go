@@ -4,7 +4,6 @@ import (
 	"os"
 	"path"
 
-	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 
@@ -14,40 +13,24 @@ import (
 )
 
 func main() {
-	// Read .env file and set environnement variables
-	errGotEnv := godotenv.Load()
-
-	// Logger configuration
-	// TODO: add custom logger configuration
-	logrus.SetFormatter(&logrus.TextFormatter{})
-	logLevel, err := logrus.ParseLevel(os.Getenv("LOG_LEVEL"))
-	if err != nil {
-		logLevel = logrus.InfoLevel
-	}
-	logrus.SetLevel(logLevel)
-
-	// Print the godotenv error after we set the loglevel
-	if errGotEnv != nil {
-		logrus.Debug("Coulnd not load .env file")
-	}
-
-	app := cli.NewApp()
-	app.Name = path.Base(os.Args[0])
-	app.Usage = "a Fringe Runner"
-	app.Version = common.AppVersion.ShortLine()
-	cli.VersionPrinter = common.AppVersion.Printer
-	app.Authors = []*cli.Author{
-		&cli.Author{
-			Name:  "Fringe Project",
-			Email: "contact@fringeproject.com",
+	app := &cli.App{
+		Name:    path.Base(os.Args[0]),
+		Usage:   "a Fringe Runner",
+		Version: common.AppVersion.ShortLine(),
+		Authors: []*cli.Author{
+			&cli.Author{
+				Name:  "Fringe Project",
+				Email: "contact@fringeproject.com",
+			},
+		},
+		Commands: common.GetCommands(),
+		CommandNotFound: func(context *cli.Context, command string) {
+			logrus.Errorf("Command % snot found.", command)
 		},
 	}
-	app.Commands = common.GetCommands()
-	app.CommandNotFound = func(context *cli.Context, command string) {
-		logrus.Errorln("Command", command, "not found.")
-	}
+	cli.VersionPrinter = common.AppVersion.Printer
 
 	if err := app.Run(os.Args); err != nil {
-		logrus.Errorln(err)
+		logrus.Error(err)
 	}
 }

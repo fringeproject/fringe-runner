@@ -7,11 +7,9 @@ import (
 )
 
 type ModuleList []common.ModuleInterface
-type MiddlewareList []common.MiddlewareInterface
 
 type Session struct {
-	Modules     ModuleList
-	Middlewares MiddlewareList
+	Modules ModuleList
 }
 
 func NewSession() (*Session, error) {
@@ -52,8 +50,4 @@ func (s *Session) GetModules() ([]common.Module, error) {
 	}
 
 	return modules, nil
-}
-
-func (s *Session) RegisterMiddleware(mod common.MiddlewareInterface) {
-	s.Middlewares = append(s.Middlewares, mod)
 }

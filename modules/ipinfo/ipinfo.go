@@ -42,7 +42,7 @@ func (m *IPInfo) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	IPInfoAPIKey, err := ctx.GetConfigurationValue("IPINFO_API_KEY")
+	IPInfoAPIKey, err := ctx.GetConfigurationValue("ipinfo_api_key")
 	if err != nil {
 		logrus.Info("IPInfo API key is empty, you will be throttled after few requests.")
 		IPInfoAPIKey = ""

@@ -79,7 +79,7 @@ func (m *Nmap) Run(ctx *common.ModuleContext) error {
 
 	// Get the nmap path from the configuration. If it's not set, then use the
 	// nmap command from the PATH
-	nmapPath, err := ctx.GetConfigurationValue("NMAP_PATH")
+	nmapPath, err := ctx.GetConfigurationValue("nmap_path")
 	if err != nil {
 		nmapPath = "nmap"
 	}

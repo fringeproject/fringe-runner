@@ -6,7 +6,6 @@ import (
 	"net"
 	"net/http"
 	"net/url"
-	"time"
 
 	"github.com/sirupsen/logrus"
 
@@ -28,7 +27,7 @@ type FringeClient struct {
 	perimeter   string
 }
 
-func NewFringeClient(coordinator string, id string, token string, perimeter string) (common.RunnerClient, error) {
+func NewFringeClient(coordinator string, id string, token string, perimeter string, opt *common.HTTPOptions) (common.RunnerClient, error) {
 
 	// Check if the coordinator is a valid URL and add it's IP to the HTTP whitelist
 	coordinatorURL, err := url.Parse(coordinator)
@@ -45,22 +44,13 @@ func NewFringeClient(coordinator string, id string, token string, perimeter stri
 		return nil, err
 	}
 
-	proxy, verifyCert := common.GetProxyFromEnv()
+	// Add custome header and the coordinator IP on the whitelist
+	opt.Headers = append(opt.Headers, common.HTTPHeader{Name: ContentTypeHeaderName, Value: ContentTypeHeaderValue})
+	opt.Headers = append(opt.Headers, common.HTTPHeader{Name: AcceptHeaderName, Value: ContentTypeHeaderValue})
+	opt.Headers = append(opt.Headers, common.HTTPHeader{Name: RunnerTokenHeaderName, Value: token})
+	opt.WhiteListIP = coordinatorIP
 
-	opt := common.HTTPOptions{
-		Headers: []common.HTTPHeader{
-			{Name: ContentTypeHeaderName, Value: ContentTypeHeaderValue},
-			{Name: AcceptHeaderName, Value: ContentTypeHeaderValue},
-			{Name: RunnerTokenHeaderName, Value: token},
-		},
-		Timeout:        time.Second * 20,
-		FollowRedirect: true,
-		Proxy:          proxy,
-		VerifyCert:     verifyCert,
-		WhiteListIP:    coordinatorIP,
-	}
-
-	httpClient, err := common.NewHTTPClient(context.Background(), &opt)
+	httpClient, err := common.NewHTTPClient(context.Background(), opt)
 	if err != nil {
 		return nil, err
 	}

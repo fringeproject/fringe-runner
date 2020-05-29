@@ -44,7 +44,7 @@ func (m *TakeOver) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	providerFile, err := common.GetRessourceFile("takeover_providers.json")
+	providerFile, err := ctx.GetRessourceFile("takeover_providers.json")
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func (m *TakeOver) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-	dnsServer, err := ctx.GetConfigurationValue("DNS_SERVER")
+	dnsServer, err := ctx.GetConfigurationValue("dns_server")
 	if err != nil {
 		logrus.Warn("No DNS server set, use 8.8.8.8 as a default value.")
 		dnsServer = "8.8.8.8"

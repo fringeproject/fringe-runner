@@ -1,25 +1,29 @@
-Fringe Runner
-=============
+# Fringe Runner
 
-The runner fetches new assets over the wire.
+`fringe-runner` is a tool to fetch new assets over the wire and add it the
+[FringeProject](https://fringeproject.com).
 
-## Requirements
 
-Fringe runner is written in Go.
+## Installation
+
+To easy-install the binary run the following command:
+
+```bash
+go get github.com/fringeproject/fringe-runner
+```
+
+If you want to install manually or for an other environment, please read the
+documentation [here](https://docs.fringeproject.com/runner/)
 
 
 ## How to use
 
 ### Configuration
 
-Fringe-Runner uses environment variables as configuration. It's possible to
-create a `.env` in the current directory. This file will be loaded at the startup.
-
-```
-LOG_LEVEL=<debug/info/...>
-HTTP_PROXY=<proxy URL>
-VERIFY_CERT=<true/false>
-```
+The configuration of `fringe-runner` is store in a YAML file `config.yml`.
+Please check the [`config.yml`](./config.yml) provided in the repository and the
+[documentation](https://docs.fringeproject.com/runner/#configuration) for more
+information.
 
 
 ### Module
@@ -50,18 +54,19 @@ fringe-runner module -e wappalyzer https://fringeproject.com | jq .[].value
 This will returns a list of technologies and their versions.
 
 
-## Modules to fetch assets from publics API
+## Available modules
 
 Here is a list of module's slugs available to query public resources:
 
 - [`alienvault`](https://alienvault.com)
 - [`bufferover`](https://dns.bufferover.run/)
+- [`censys`](https://censys.io/api): need API key (`censys_api_id`) and secret (`censys_api_secret`)
 - [`certspotter`](https://sslmate.com/certspotter/): API key is not supported yet
 - [`crtsh`](crt.sh/)
 - [`dnsdumpster`](https://dnsdumpster.com/): API key is not supported yet
 - [`hackertarget`](https://hackertarget.com/)
-- [`securitytrails`](https://securitytrails.com/): need an API key sets as `SECURITYTRAILS_API_KEY`
-- [`shodan`](https://www.shodan.io/): may use an API key sets as `SHODAN_API_KEY`
+- [`securitytrails`](https://securitytrails.com/): need an API key sets as `securitytrails_api_key`
+- [`shodan`](https://www.shodan.io/): may use an API key sets as `shodan_api_key`
 - [`sublist3r`](https://github.com/aboul3la/Sublist3r)
 - [`threatcrowd`](https://www.threatcrowd.org/)
 - [`threatminer`](https://www.threatminer.org/)

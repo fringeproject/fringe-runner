@@ -1,22 +1,48 @@
 package commands
 
 import (
+	"os"
+
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 
 	"github.com/fringeproject/fringe-runner/common"
+	"github.com/fringeproject/fringe-runner/modules"
+	"github.com/fringeproject/fringe-runner/session"
 )
 
 type UpdateCommand struct {
 }
 
 func (s *UpdateCommand) Execute(c *cli.Context, config *common.FringeConfig) error {
-	err := common.UpdateModuleRessources(config)
+	sess, err := session.NewSession()
 	if err != nil {
-		return err
+		logrus.Warn(err)
+		os.Exit(1)
 	}
+	defer sess.Close()
 
-	logrus.Info("Downloaded the ressources files.")
+	// Load Fringe modules in the session
+	modules.LoadModules(sess)
+
+	for _, module := range sess.Modules {
+		resources := module.ResourceURLs()
+		if resources != nil {
+			logrus.Infof("The module %s needs %d resources.", module.Slug(), len(resources))
+
+			for _, resource := range resources {
+				logrus.Infof("Try to download %s from %s.", resource.Name, resource.URL)
+				err = common.DownloadResource(resource, config)
+
+				if err != nil {
+					logrus.Warning("There was an error while downloading resource %s", resource.Name)
+					logrus.Debug(err)
+				} else {
+					logrus.Infof("Download of %s is a success.", resource.Name)
+				}
+			}
+		}
+	}
 
 	return nil
 }

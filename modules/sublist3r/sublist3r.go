@@ -30,6 +30,10 @@ func (m *Sublist3r) Description() string {
 	return "Requests Sublist3r API. Ref: https://github.com/aboul3la/Sublist3r"
 }
 
+func (m *Sublist3r) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *Sublist3r) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

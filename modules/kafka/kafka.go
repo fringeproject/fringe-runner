@@ -30,6 +30,10 @@ func (m *KafkaAPI) Description() string {
 	return "Test if a Kafka REST interface is exposed on port 8083. Ref: https://docs.confluent.io/current/connect/references/restapi.html"
 }
 
+func (m *KafkaAPI) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *KafkaAPI) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

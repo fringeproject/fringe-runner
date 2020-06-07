@@ -44,6 +44,10 @@ func (m *URLScan) Description() string {
 	return "Use the urlscan.io search API to get list of subdomains from URL. Ref: https://urlscan.io/about-api/."
 }
 
+func (m *URLScan) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *URLScan) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

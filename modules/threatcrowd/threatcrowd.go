@@ -35,6 +35,10 @@ func (m *ThreatCrowd) Description() string {
 	return "Request Threatcrowd website to get informations about hostname. Ref: https://www.threatcrowd.org/"
 }
 
+func (m *ThreatCrowd) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *ThreatCrowd) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

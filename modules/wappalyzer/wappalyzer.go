@@ -51,6 +51,12 @@ func (m *Wappalyzer) Description() string {
 	return "Analyzer HTTP response using Wappalyzer. Ref: https://www.wappalyzer.com/"
 }
 
+func (m *Wappalyzer) ResourceURLs() []common.ModuleResource {
+	return []common.ModuleResource{
+		{Name: "wappalyzer.json", URL: "https://raw.githubusercontent.com/AliasIO/wappalyzer/master/src/apps.json"},
+	}
+}
+
 func (w *Wappalyzer) Parse(body *[]byte, headers *http.Header) error {
 	w.Tags = make([]string, 0)
 

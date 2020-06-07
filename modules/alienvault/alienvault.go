@@ -50,6 +50,10 @@ func (m *AlienVault) Description() string {
 	return "Requests AlienVault API. Ref: https://otx.alienvault.com"
 }
 
+func (m *AlienVault) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *AlienVault) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

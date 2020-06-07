@@ -30,6 +30,10 @@ func (m *Wayback) Description() string {
 	return "Request Wayback website to retreive old information about hostname."
 }
 
+func (m *Wayback) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func RequestPage(ctx *common.ModuleContext, hostname string, page int) ([][]string, error) {
 	url := fmt.Sprintf("https://web.archive.org/cdx/search/cdx?url=*.%s/*&output=json&collapse=urlkey&page=%d", hostname, page)
 

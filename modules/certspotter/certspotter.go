@@ -34,6 +34,10 @@ func (m *CertSpotter) Description() string {
 	return "Request CertSpotter website to get informations about hostname. Ref: https://sslmate.com/certspotter/"
 }
 
+func (m *CertSpotter) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *CertSpotter) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

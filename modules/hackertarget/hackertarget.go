@@ -32,6 +32,10 @@ func (m *HackerTarget) Description() string {
 	return "Requests HackerTarget API to get informations about hostname."
 }
 
+func (m *HackerTarget) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *HackerTarget) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

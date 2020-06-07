@@ -30,6 +30,10 @@ func (m *ElasticSearchAPI) Description() string {
 	return "Test if an elasticsearch API is exposed on port 9200 or 9300. Ref: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html"
 }
 
+func (m *ElasticSearchAPI) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *ElasticSearchAPI) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

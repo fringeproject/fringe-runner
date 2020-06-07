@@ -31,6 +31,10 @@ func (m *Nmap) Description() string {
 	return "Run the network mapper nmap."
 }
 
+func (m *Nmap) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func RunNmapScan(nmapPath string, nmapArgs []string) (*NmapExecution, error) {
 	var (
 		out, errs bytes.Buffer

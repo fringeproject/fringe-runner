@@ -32,6 +32,10 @@ func (m *Backup) Description() string {
 	return "Based on the URL, tries to requests various filenames with backup variations such as .old, .tar, ..."
 }
 
+func (m *Backup) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func GenerateBackupFileVariation(filename string) []string {
 	// First we need the get the base filename and its extension
 	extensionIndex := strings.LastIndex(filename, ".")

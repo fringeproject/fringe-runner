@@ -36,6 +36,10 @@ func (m *Shodan) Description() string {
 	return "Requests Shodan API."
 }
 
+func (m *Shodan) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *Shodan) Run(ctx *common.ModuleContext) error {
 	ip, err := ctx.GetAssetAsIP()
 	if err != nil {

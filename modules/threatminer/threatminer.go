@@ -34,6 +34,10 @@ func (m *ThreatMiner) Description() string {
 	return "Requests ThreatMiner Hostname API. Ref: https://www.threatminer.org/api.php"
 }
 
+func (m *ThreatMiner) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *ThreatMiner) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

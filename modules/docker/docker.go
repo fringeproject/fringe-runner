@@ -29,6 +29,10 @@ func (m *DockerAPI) Description() string {
 	return "Test if a docker API (dockerd) is exposed on port 2375 and 2376 of the host. Ref: https://docs.docker.com/engine/reference/commandline/dockerd/"
 }
 
+func (m *DockerAPI) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *DockerAPI) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

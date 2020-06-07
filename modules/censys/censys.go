@@ -39,6 +39,10 @@ func (m *Censys) Description() string {
 	return "Requests CensysIO API."
 }
 
+func (m *Censys) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *Censys) Run(ctx *common.ModuleContext) error {
 	ip, err := ctx.GetAssetAsIP()
 	if err != nil {

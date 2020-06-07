@@ -30,6 +30,10 @@ func (m *SSLStriper) Description() string {
 	return "Get information from X.509 certificat of a hostname (default port 443)."
 }
 
+func (m *SSLStriper) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *SSLStriper) Run(ctx *common.ModuleContext) error {
 	host, err := ctx.GetAssetAsHostname()
 	if err != nil {

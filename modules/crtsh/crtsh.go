@@ -35,6 +35,10 @@ func (m *Crtsh) Description() string {
 	return "Request crt.sh website to get informations about a hostname."
 }
 
+func (m *Crtsh) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *Crtsh) Run(ctx *common.ModuleContext) error {
 	// Get the hostname
 	baseHostname, err := ctx.GetAssetAsHostname()

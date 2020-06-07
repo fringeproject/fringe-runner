@@ -38,6 +38,12 @@ func (m *TakeOver) Description() string {
 	return "Checks if the hostname has a dangling CNAME record pointing to a service."
 }
 
+func (m *TakeOver) ResourceURLs() []common.ModuleResource {
+	return []common.ModuleResource{
+		{Name: "takeover_providers.json", URL: "https://static.fringeproject.com/fringe-runner/resources/takeover_providers.json"},
+	}
+}
+
 func (m *TakeOver) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

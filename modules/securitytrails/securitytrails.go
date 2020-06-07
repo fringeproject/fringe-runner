@@ -34,6 +34,10 @@ func (m *SecurityTrails) Description() string {
 	return "Requests SecurityTrails API. Ref: https://securitytrails.com/corp/api"
 }
 
+func (m *SecurityTrails) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *SecurityTrails) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

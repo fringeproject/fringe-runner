@@ -29,6 +29,10 @@ func (m *KubernetesAPI) Description() string {
 	return "Test if a kubernetes API is exposed on port 10250."
 }
 
+func (m *KubernetesAPI) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *KubernetesAPI) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

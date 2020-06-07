@@ -35,6 +35,10 @@ func (m *BufferOver) Description() string {
 	return "Requests BufferOver API. Ref: https://blog.erbbysam.com/index.php/2019/02/09/dnsgrep/. Ref: https://github.com/erbbysam/DNSGrep"
 }
 
+func (m *BufferOver) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *BufferOver) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

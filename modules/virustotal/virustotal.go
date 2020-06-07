@@ -38,6 +38,10 @@ func (m *VirusTotal) Description() string {
 	return "Requests VirusTotal API (UI). Ref: https://www.virustotal.com/"
 }
 
+func (m *VirusTotal) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *VirusTotal) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

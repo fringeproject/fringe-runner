@@ -32,6 +32,10 @@ func (m *AWSS3) Description() string {
 	return "Test if there is a AWS S3 bucket available on the hostname. Test this module with 'flaws.cloud'."
 }
 
+func (m *AWSS3) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func checkBucketName(bucketName string) (bool, error) {
 	pattern := "(^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$)"
 	bucketNameLen := len(bucketName)

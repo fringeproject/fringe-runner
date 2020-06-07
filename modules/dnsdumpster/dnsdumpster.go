@@ -34,6 +34,10 @@ func (m *Dnsdumpster) Description() string {
 	return "Requests dnsdumpster.com website to get informations about hostname."
 }
 
+func (m *Dnsdumpster) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *Dnsdumpster) Run(ctx *common.ModuleContext) error {
 	hostname, err := ctx.GetAssetAsHostname()
 	if err != nil {

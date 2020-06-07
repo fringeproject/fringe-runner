@@ -36,6 +36,10 @@ func (m *IPInfo) Description() string {
 	return "Requests IPInfo API to retreive information about an IP. Ref: https://ipinfo.io/developers"
 }
 
+func (m *IPInfo) ResourceURLs() []common.ModuleResource {
+	return nil
+}
+
 func (m *IPInfo) Run(ctx *common.ModuleContext) error {
 	ip, err := ctx.GetAssetAsIP()
 	if err != nil {

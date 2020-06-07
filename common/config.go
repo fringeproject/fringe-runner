@@ -6,8 +6,10 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"gopkg.in/yaml.v2"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -52,9 +54,17 @@ func findFringeHomePath() (string, error) {
 }
 
 func ReadConfigFile(configPath string) (*FringeConfig, error) {
+	if strings.HasPrefix(configPath, "~/") {
+		homeDir, err := os.UserHomeDir()
+		if err == nil {
+			configPath = filepath.Join(homeDir, configPath[2:])
+		}
+	}
+
 	configFile, err := ioutil.ReadFile(configPath)
 	if err != nil {
-		err = fmt.Errorf("The configuration file does not exist.")
+		logrus.Warning(err)
+		err = fmt.Errorf("The configuration file does not exist at %s.", configPath)
 		return nil, err
 	}
 

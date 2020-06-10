@@ -110,6 +110,11 @@ func (ctx *ModuleContext) createNewAsset(assetValue string, assetType AssetType)
 	return nil
 }
 
+func (ctx *ModuleContext) GetBeaconAsURL() string {
+	// TODO: create a real beacon with a uniq ID
+	return "https://fringeproject.com/"
+}
+
 // Create a raw asset
 func (ctx *ModuleContext) CreateNewAssetAsRaw(raw string) error {
 	return ctx.createNewAsset(raw, AssetTypes["raw"])

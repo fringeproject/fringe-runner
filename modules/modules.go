@@ -7,6 +7,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/bufferover"
 	"github.com/fringeproject/fringe-runner/modules/censys"
 	"github.com/fringeproject/fringe-runner/modules/certspotter"
+	"github.com/fringeproject/fringe-runner/modules/cors"
 	"github.com/fringeproject/fringe-runner/modules/crtsh"
 	"github.com/fringeproject/fringe-runner/modules/dnsdumpster"
 	"github.com/fringeproject/fringe-runner/modules/docker"
@@ -39,6 +40,7 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(bufferover.NewBufferOver())
 	sess.RegisterModule(censys.NewCensys())
 	sess.RegisterModule(certspotter.NewCertSpotter())
+	sess.RegisterModule(cors.NewCORS())
 	sess.RegisterModule(crtsh.NewCrtsh())
 	sess.RegisterModule(dnsdumpster.NewDnsdumpster())
 	sess.RegisterModule(docker.NewDockerAPI())

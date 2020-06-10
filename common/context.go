@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strconv"
 	"time"
 )
 
@@ -144,18 +143,11 @@ func (ctx *ModuleContext) CreateNewAssetAsURL(url string) error {
 }
 
 func (ctx *ModuleContext) GetDefaultHTTPOptions() *HTTPOptions {
-	proxy, _ := ctx.GetConfigurationValue("HTTP_PROXY")
-	verify, _ := ctx.GetConfigurationValue("VERIFY_CERT")
-	verifyCert, err := strconv.ParseBool(verify)
-	if err != nil {
-		verifyCert = true
-	}
-
 	opts := HTTPOptions{
-		Proxy:          proxy,
+		Proxy:          ctx.config.Proxy,
 		Timeout:        time.Second * 4,
 		FollowRedirect: true,
-		VerifyCert:     verifyCert,
+		VerifyCert:     ctx.config.VerifyCert,
 		Headers:        make([]HTTPHeader, 0),
 		WhiteListIP:    make([]string, 0),
 	}

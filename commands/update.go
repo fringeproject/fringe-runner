@@ -35,7 +35,7 @@ func (s *UpdateCommand) Execute(c *cli.Context, config *common.FringeConfig) err
 				err = common.DownloadResource(resource, config)
 
 				if err != nil {
-					logrus.Warning("There was an error while downloading resource %s", resource.Name)
+					logrus.Warningf("There was an error while downloading resource %s", resource.Name)
 					logrus.Debug(err)
 				} else {
 					logrus.Infof("Download of %s is a success.", resource.Name)

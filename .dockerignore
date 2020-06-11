@@ -1,0 +1,9 @@
+# Don't copy the .git folders
+.github/
+
+# Coverage files
+coverage.profile
+coverage.profile.html
+
+# Default binaries folder
+build/

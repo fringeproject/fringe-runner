@@ -58,4 +58,8 @@ upload: build
 	scp $(BUILD_FOLDER)/* fringe:/opt/fringe-static/fringe-runner/builds/; \
 	echo "Upload done."
 
+docker-build:
+	@docker build -t "$(NAME)" . ; \
+	echo "Docker build done."
+
 all: clean fmt update lint

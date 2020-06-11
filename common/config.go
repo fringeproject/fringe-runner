@@ -53,7 +53,41 @@ func findFringeHomePath() (string, error) {
 	return "", fmt.Errorf("Couldn't find fringe-runner home directory. Please specify a home dirctory for your user or the `FRINGE_HOME` environment variable.")
 }
 
+func findConfigFile() (string, error) {
+    homeDir, err := os.UserHomeDir()
+    if err == nil {
+        configHomeDirectoryPath := path.Join(homeDir, ".fringe-runner.yml")
+
+        info, err := os.Stat(configHomeDirectoryPath)
+        if !os.IsNotExist(err) && !info.IsDir() {
+            return configHomeDirectoryPath, nil
+        }
+    }
+
+    return "", fmt.Errorf("Could not find the configuration file.")
+}
+
 func ReadConfigFile(configPath string) (*FringeConfig, error) {
+	// Instantiate the structure with default values
+	config := &FringeConfig{
+		LogLevel:            "info",
+		Proxy:               "",
+		VerifyCert:          true,
+		HomeDirectory:       "", // set the empty string for futur check
+		ModuleConfiguration: map[string]string{},
+	}
+
+	// If there is no file to read then return the default configuration
+	if len(configPath) == 0 {
+		defaultConfigPath, err := findConfigFile()
+		if err != nil {
+			logrus.Debug(err)
+			return config, nil
+		}
+
+		configPath = defaultConfigPath
+	}
+
 	if strings.HasPrefix(configPath, "~/") {
 		homeDir, err := os.UserHomeDir()
 		if err == nil {
@@ -68,14 +102,6 @@ func ReadConfigFile(configPath string) (*FringeConfig, error) {
 		return nil, err
 	}
 
-	// Instantiate the structure with default values
-	config := FringeConfig{
-		LogLevel:            "info",
-		Proxy:               "",
-		VerifyCert:          true,
-		HomeDirectory:       "", // set the empty string for futur check
-		ModuleConfiguration: map[string]string{},
-	}
 	err = yaml.Unmarshal([]byte(configFile), &config)
 	if err != nil {
 		err = fmt.Errorf("The configuration file is not a valid YAML file.")
@@ -92,5 +118,5 @@ func ReadConfigFile(configPath string) (*FringeConfig, error) {
 		config.HomeDirectory = defaultHome
 	}
 
-	return &config, nil
+	return config, nil
 }

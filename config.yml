@@ -6,7 +6,7 @@ proxy:
 # proxy: http://127.0.0.1:8080
 
 # Verify SSL certificate on HTTPS requests (default: true)
-verify_cert: false
+verify_cert: true
 
 # Set the directory used by the runner to store resources (default: ~/.fringe-runner)
 # home_directory: ~/.fringe-runner

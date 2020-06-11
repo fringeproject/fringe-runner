@@ -52,8 +52,6 @@ func RegisterCommand(name, usage string, data Commander, flags []cli.Flag) {
 		Aliases:  []string{"c"},
 		Usage:    "load configuration from `FILE`",
 		EnvVars:  []string{"FRINGE_CONFIG"},
-		Value:    "~/.fringe-runner.yml",
-		FilePath: "~/.fringe-runner.yml",
 	}
 
 	command.Flags = append(command.Flags, configFlag)

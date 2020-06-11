@@ -15,6 +15,21 @@ go get github.com/fringeproject/fringe-runner
 If you want to install manually or for an other environment, please read the
 documentation [here](https://docs.fringeproject.com/runner/)
 
+### Docker
+A Docker image of the latest build is available on [DockerHub](https://hub.docker.com/r/fringeproject/fringe-runner):
+
+```bash
+docker run -it --rm fringeproject/fringe-runner:latest <cmd>
+```
+
+You can also build the image yourself:
+
+```bash
+docker build .
+---> <image_id>
+docker run -it <image_id> <cmd>
+```
+
 
 ## How to use
 
@@ -72,3 +87,4 @@ Here is a list of module's slugs available to query public resources:
 - [`threatminer`](https://www.threatminer.org/)
 - [`urlscan`](https://urlscan.io/)
 - [`virustotal`](https://www.virustotal.com/): use the unofficial API (ui)
+- [`yougetsignal`](https://www.yougetsignal.com/)

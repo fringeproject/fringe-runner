@@ -48,10 +48,10 @@ func RegisterCommand(name, usage string, data Commander, flags []cli.Flag) {
 	}
 
 	configFlag := &cli.StringFlag{
-		Name:     "config",
-		Aliases:  []string{"c"},
-		Usage:    "load configuration from `FILE`",
-		EnvVars:  []string{"FRINGE_CONFIG"},
+		Name:    "config",
+		Aliases: []string{"c"},
+		Usage:   "load configuration from `FILE`",
+		EnvVars: []string{"FRINGE_CONFIG"},
 	}
 
 	command.Flags = append(command.Flags, configFlag)

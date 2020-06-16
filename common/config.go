@@ -54,17 +54,17 @@ func findFringeHomePath() (string, error) {
 }
 
 func findConfigFile() (string, error) {
-    homeDir, err := os.UserHomeDir()
-    if err == nil {
-        configHomeDirectoryPath := path.Join(homeDir, ".fringe-runner.yml")
+	homeDir, err := os.UserHomeDir()
+	if err == nil {
+		configHomeDirectoryPath := path.Join(homeDir, ".fringe-runner.yml")
 
-        info, err := os.Stat(configHomeDirectoryPath)
-        if !os.IsNotExist(err) && !info.IsDir() {
-            return configHomeDirectoryPath, nil
-        }
-    }
+		info, err := os.Stat(configHomeDirectoryPath)
+		if !os.IsNotExist(err) && !info.IsDir() {
+			return configHomeDirectoryPath, nil
+		}
+	}
 
-    return "", fmt.Errorf("Could not find the configuration file.")
+	return "", fmt.Errorf("Could not find the configuration file.")
 }
 
 func ReadConfigFile(configPath string) (*FringeConfig, error) {

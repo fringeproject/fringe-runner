@@ -138,6 +138,12 @@ func GenerateDialer(allowIPAddresses []string) (func(string, string) (net.Conn, 
 // 	return dialer.Dial(network, addr)
 // }
 
+func SearchAllIP(rawString string) []string {
+	re := regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])`)
+	re.Longest()
+	return re.FindAllString(rawString, -1)
+}
+
 func IsIPv4(rawString string) bool {
 	parts := strings.Split(rawString, ".")
 
@@ -168,10 +174,16 @@ func CleanHostname(hostname string) string {
 	return hostname
 }
 
+func SearchAllHostname(rawString string) []string {
+	re := regexp.MustCompile(`(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)+([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])`)
+	re.Longest()
+	return re.FindAllString(rawString, -1)
+}
+
 func IsHostname(host string) bool {
 	host = strings.Trim(host, " ")
 
-	re, _ := regexp.Compile(`^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$`)
+	re := regexp.MustCompile(`^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)+([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$`)
 	return re.MatchString(host)
 }
 

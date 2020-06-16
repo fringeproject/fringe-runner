@@ -57,6 +57,15 @@ You can execute a module manually `-e/--exec`:
 fringe-runner module --exec <module_slug> <asset_value>
 ```
 
+### Parse a local file
+
+This command parse a file separated by new lines:
+
+```bash
+fringe-runner parse -p <file_path> | jq ".[].value"
+```
+
+
 ### Example
 
 You want to use the `wappalyzer` module on a URL to identify technologies on a

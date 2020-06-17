@@ -17,6 +17,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/kafka"
 	"github.com/fringeproject/fringe-runner/modules/kubernetes"
 	"github.com/fringeproject/fringe-runner/modules/nmap"
+	"github.com/fringeproject/fringe-runner/modules/openredirect"
 	"github.com/fringeproject/fringe-runner/modules/securitytrails"
 	"github.com/fringeproject/fringe-runner/modules/shodan"
 	"github.com/fringeproject/fringe-runner/modules/sslstriper"
@@ -50,6 +51,7 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(kafka.NewKafkaAPI())
 	sess.RegisterModule(kubernetes.NewKubernetesAPI())
 	sess.RegisterModule(nmap.NewNmap())
+	sess.RegisterModule(openredirect.NewOpenRedirect())
 	sess.RegisterModule(securitytrails.NewSecurityTrails())
 	sess.RegisterModule(shodan.NewShodan())
 	sess.RegisterModule(sslstriper.NewSSLStriper())

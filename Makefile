@@ -54,7 +54,7 @@ install:
 	echo "Install done."
 
 upload: build
-	@scp ./ressources/*.{txt,json} fringe:/opt/fringe-static/fringe-runner/ressources/; \
+	@scp ./resources/*.json fringe:/opt/fringe-static/fringe-runner/resources/; \
 	scp $(BUILD_FOLDER)/* fringe:/opt/fringe-static/fringe-runner/builds/; \
 	echo "Upload done."
 

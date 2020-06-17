@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	FRINGE_RESSOURCE_DIRECTORY = "ressources"
+	FRINGE_RESSOURCE_DIRECTORY = "resources"
 )
 
 func getResourceDirectory(homeDirectory string) (string, error) {
@@ -17,7 +17,7 @@ func getResourceDirectory(homeDirectory string) (string, error) {
 
 	err := os.MkdirAll(resourceDirectory, 0700)
 	if err != nil {
-		err = fmt.Errorf("Cannot create the directory for the ressources.")
+		err = fmt.Errorf("Cannot create the directory for the resources.")
 		return "", err
 	}
 

@@ -102,11 +102,10 @@ func (s *ServiceCommand) getRunnerClient() (common.RunnerClient, error) {
 	}
 
 	coordinator := s.config.FringeCoordinator
-	perimeter := s.config.FringePerimeter
 	runnerID := s.config.FringeRunnerId
 	ruunerToken := s.config.FringeRunnerToken
 
-	client, err := network.NewFringeClient(coordinator, runnerID, ruunerToken, perimeter, opt)
+	client, err := network.NewFringeClient(coordinator, runnerID, ruunerToken, opt)
 	if err != nil {
 		return nil, err
 	}

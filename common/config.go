@@ -22,7 +22,6 @@ type FringeConfig struct {
 	VerifyCert          bool              `yaml:"verify_cert"`
 	HomeDirectory       string            `yaml:"home_directory"`
 	FringeCoordinator   string            `yaml:"fringe_coordinator"`
-	FringePerimeter     string            `yaml:"fringe_perimeter"`
 	FringeRunnerId      string            `yaml:"fringe_runner_id"`
 	FringeRunnerToken   string            `yaml:"fringe_runner_token"`
 	ModuleConfiguration map[string]string `yaml:"module_configuration"`

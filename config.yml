@@ -13,7 +13,6 @@ verify_cert: true
 
 # Client configuration to connect to the backend with the `service` command
 # fringe_coordinator:
-# fringe_perimeter:
 # fringe_runner_id:
 # fringe_runner_token:
 

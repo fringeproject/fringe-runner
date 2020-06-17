@@ -24,10 +24,9 @@ type FringeClient struct {
 	coordinator string
 	id          string
 	token       string
-	perimeter   string
 }
 
-func NewFringeClient(coordinator string, id string, token string, perimeter string, opt *common.HTTPOptions) (common.RunnerClient, error) {
+func NewFringeClient(coordinator string, id string, token string, opt *common.HTTPOptions) (common.RunnerClient, error) {
 
 	// Check if the coordinator is a valid URL and add it's IP to the HTTP whitelist
 	coordinatorURL, err := url.Parse(coordinator)
@@ -60,7 +59,6 @@ func NewFringeClient(coordinator string, id string, token string, perimeter stri
 		coordinator: coordinator,
 		id:          id,
 		token:       token,
-		perimeter:   perimeter,
 	}
 
 	return client, nil
@@ -71,7 +69,7 @@ func (c *FringeClient) String() string {
 }
 
 func (c *FringeClient) SendModuleList(modules []common.Module) error {
-	url := fmt.Sprintf("%s/perimeters/%s/runners/%s/modules", c.coordinator, c.perimeter, c.id)
+	url := fmt.Sprintf("%s/runners/%s/modules", c.coordinator, c.id)
 	data := &common.FringeClientModuleListRequest{
 		Modules: modules,
 	}
@@ -90,7 +88,7 @@ func (c *FringeClient) SendModuleList(modules []common.Module) error {
 }
 
 func (c *FringeClient) RequestJob() (*common.Job, error) {
-	url := fmt.Sprintf("%s/perimeters/%s/runners/%s/job", c.coordinator, c.perimeter, c.id)
+	url := fmt.Sprintf("%s/runners/%s/job", c.coordinator, c.id)
 	job := &common.Job{}
 
 	_, _, _, err := c.httpClient.DoJson(http.MethodGet, url, "", "", nil, job)
@@ -102,7 +100,7 @@ func (c *FringeClient) RequestJob() (*common.Job, error) {
 }
 
 func (c *FringeClient) UpdateJob(job *common.Job, newAssets []common.Asset) error {
-	url := fmt.Sprintf("%s/perimeters/%s/runners/%s/job", c.coordinator, c.perimeter, c.id)
+	url := fmt.Sprintf("%s/runners/%s/job", c.coordinator, c.id)
 	data := &common.FringeClientUpdateJobRequest{
 		ID:          job.ID,
 		Status:      common.JOB_STATUS_SUCCESS,

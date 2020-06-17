@@ -25,6 +25,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/takeover"
 	"github.com/fringeproject/fringe-runner/modules/threatcrowd"
 	"github.com/fringeproject/fringe-runner/modules/threatminer"
+	"github.com/fringeproject/fringe-runner/modules/tor"
 	"github.com/fringeproject/fringe-runner/modules/urlscan"
 	"github.com/fringeproject/fringe-runner/modules/virustotal"
 	"github.com/fringeproject/fringe-runner/modules/wappalyzer"
@@ -59,6 +60,7 @@ func LoadModules(sess *session.Session) {
 	sess.RegisterModule(takeover.NewTakeOver())
 	sess.RegisterModule(threatcrowd.NewThreatCrowd())
 	sess.RegisterModule(threatminer.NewThreatMiner())
+	sess.RegisterModule(tor.NewTor())
 	sess.RegisterModule(urlscan.NewURLScan())
 	sess.RegisterModule(virustotal.NewVirusTotal())
 	sess.RegisterModule(wappalyzer.NewWappalyzer())

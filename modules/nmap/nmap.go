@@ -88,14 +88,55 @@ func (m *Nmap) Run(ctx *common.ModuleContext) error {
 		nmapPath = "nmap"
 	}
 
+	// https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.txt
+	// Use the top 20 ports and add some customs
+	ports := strings.Join([]string{
+		"21",    // FTP
+		"22",    // SSH
+		"23",    // Telnet
+		"25",    // SMTP
+		"53",    // DNS
+		"80",    // HTTP
+		"81",    // HTTP alt
+		"110",   // POP3
+		"111",   // RPC
+		"135",   // RPC
+		"139",   // Netbios
+		"143",   // IMAP
+		"443",   // HTTPS
+		"445",   // SMB
+		"993",   // IMAP over SSL
+		"995",   // POP3 over SSL
+		"1521",  // Oracle Net Listener
+		"1723",  // PPTP
+		"2375",  // docker api
+		"2379",  // etcd
+		"3000",  // HTTP default Ruby
+		"3306",  // MySQL
+		"3389",  // RDP
+		"4000",  // HTTP default server
+		"5000",  // HTTP default server
+		"5432",  // PostgreSQL
+		"5900",  // VNC
+		"6000",  // HTTP default server
+		"6443",  // HTTPS alt
+		"7000",  // HTTP default server
+		"8000",  // HTTP alt
+		"8001",  // HTTP alt
+		"8008",  // HTTP alt
+		"8080",  // HTTP alt-proxy
+		"8083",  // HTTP alt
+		"8443",  // HTTPS alt
+		"8834",  // HTTPS alt
+		"8888",  // HTTP alt
+		"9200",  // Elasticsearch
+		"9300",  // Elasticsearch
+		"10250", // Kubernetes API
+		"10255", // Kubelet
+	}, ",")
 	args := []string{
 		// "--top-ports", "20", // Use the "Top 20 most scanned ports"
-		// Use the top 20 ports and add some customs
-		// 2375: docker api
-		// 8083: kafka
-		// 9200, 9300: elasticsearch
-		// 10250: Kubernetes API
-		"-p", "21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,2375,3306,3389,5900,8080,8083,9200,9300,10250",
+		"-p", ports,
 		"--unprivileged", // Assume the user lacks raw socket privileges
 		"-sV",            // Probe open ports to determine service/version info
 		"-n",             //  Never do DNS resolution

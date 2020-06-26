@@ -25,3 +25,4 @@ module_config:
   # securitytrails_api_key: ""
   # shodan_api_key: ""
   # dns_server: ""
+  # whoisxmlapi_key: ""

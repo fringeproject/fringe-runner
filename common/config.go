@@ -24,7 +24,7 @@ type FringeConfig struct {
 	FringeCoordinator   string            `yaml:"fringe_coordinator"`
 	FringeRunnerId      string            `yaml:"fringe_runner_id"`
 	FringeRunnerToken   string            `yaml:"fringe_runner_token"`
-	ModuleConfiguration map[string]string `yaml:"module_configuration"`
+	ModuleConfiguration map[string]string `yaml:"module_config"`
 }
 
 // Return the folder path to store the wordlists

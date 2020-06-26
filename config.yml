@@ -18,10 +18,10 @@ verify_cert: true
 
 # Module configuration
 module_config:
-# - censys_api_id: ""
-# - censys_api_secret: ""
-# - ipinfo_api_key: ""
-# - nmap_path: ""
-# - securitytrails_api_key: ""
-# - shodan_api_key: ""
-# - dns_server: ""
+  # censys_api_id: ""
+  # censys_api_secret: ""
+  # ipinfo_api_key: ""
+  # nmap_path: ""
+  # securitytrails_api_key: ""
+  # shodan_api_key: ""
+  # dns_server: ""

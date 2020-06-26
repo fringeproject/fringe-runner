@@ -43,6 +43,7 @@ func (m *HackerTarget) Run(ctx *common.ModuleContext) error {
 	}
 	hostname = common.CleanHostname(hostname)
 
+	// https://api.hackertarget.com/aslookup/?q=
 	url := "https://api.hackertarget.com/hostsearch/?q=" + hostname
 	_, body, _, err := ctx.HttpRequest(http.MethodGet, url, nil, nil)
 	if err != nil {

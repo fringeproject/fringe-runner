@@ -58,7 +58,6 @@ func (m *WhoisXMLAPI) Run(ctx *common.ModuleContext) error {
 		return err
 	}
 
-
 	// The API provide a pager based on the last domain.
 	// We don't want to waste all the API call so we limit to 3 calls per run
 	lastDomain := "1"

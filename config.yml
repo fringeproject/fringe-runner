@@ -16,7 +16,7 @@ verify_cert: true
 # fringe_runner_id:
 # fringe_runner_token:
 
-# Module configuration
+# Module configuration key/value, there is no default values
 module_config:
   # censys_api_id: ""
   # censys_api_secret: ""
@@ -26,3 +26,9 @@ module_config:
   # shodan_api_key: ""
   # dns_server: ""
   # whoisxmlapi_key: ""
+  # The renderer must be one of chrome, chromium or firefox
+  # webscreenshot_renderer: "chrome"|"chromium"|"firefox"
+  # The path of the renderer binary
+  # webscreenshot_renderer_path: ""
+  # The directory to write the screenshots
+  # webscreenshot_output: ""

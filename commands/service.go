@@ -12,12 +12,11 @@ import (
 	"github.com/fringeproject/fringe-runner/common"
 	"github.com/fringeproject/fringe-runner/modules"
 	"github.com/fringeproject/fringe-runner/network"
-	"github.com/fringeproject/fringe-runner/session"
 )
 
 type ServiceCommand struct {
 	context  *cli.Context
-	session  *session.Session
+	session  *common.Session
 	config   *common.FringeConfig
 	client   common.RunnerClient
 	jobsChan chan *common.Job
@@ -116,7 +115,7 @@ func (s *ServiceCommand) getRunnerClient() (common.RunnerClient, error) {
 // Start an infinite loop to request jobs to the coordinator and execute them
 func (s *ServiceCommand) Execute(c *cli.Context, config *common.FringeConfig) error {
 	// Create a new session that hold the modules
-	sess, err := session.NewSession()
+	sess, err := common.NewSession()
 	if err != nil {
 		logrus.Warn(err)
 		os.Exit(1)

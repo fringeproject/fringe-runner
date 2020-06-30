@@ -35,10 +35,10 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/whoisxmlapi"
 	"github.com/fringeproject/fringe-runner/modules/yougetsignal"
 
-	"github.com/fringeproject/fringe-runner/session"
+	"github.com/fringeproject/fringe-runner/common"
 )
 
-func LoadModules(sess *session.Session) {
+func LoadModules(sess *common.Session) {
 	sess.RegisterModule(alienvault.NewAlienVault())
 	sess.RegisterModule(awss3.NewAWSS3())
 	sess.RegisterModule(backup.NewBackup())

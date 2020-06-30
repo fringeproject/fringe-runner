@@ -8,14 +8,13 @@ import (
 
 	"github.com/fringeproject/fringe-runner/common"
 	"github.com/fringeproject/fringe-runner/modules"
-	"github.com/fringeproject/fringe-runner/session"
 )
 
 type UpdateCommand struct {
 }
 
 func (s *UpdateCommand) Execute(c *cli.Context, config *common.FringeConfig) error {
-	sess, err := session.NewSession()
+	sess, err := common.NewSession()
 	if err != nil {
 		logrus.Warn(err)
 		os.Exit(1)

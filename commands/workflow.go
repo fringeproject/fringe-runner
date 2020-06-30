@@ -12,12 +12,11 @@ import (
 
 	"github.com/fringeproject/fringe-runner/common"
 	"github.com/fringeproject/fringe-runner/modules"
-	"github.com/fringeproject/fringe-runner/session"
 )
 
 type WorkflowCommand struct {
 	context *cli.Context
-	session *session.Session
+	session *common.Session
 	config  *common.FringeConfig
 }
 
@@ -179,7 +178,7 @@ func (s *WorkflowCommand) Execute(c *cli.Context, config *common.FringeConfig) e
 	// Create a new session that hold the modules
 	// Even if we don't know the command the user want to pass, we create the
 	// session and load the modules.
-	sess, err := session.NewSession()
+	sess, err := common.NewSession()
 	if err != nil {
 		logrus.Warn(err)
 		os.Exit(1)

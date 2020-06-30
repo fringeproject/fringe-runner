@@ -66,8 +66,13 @@ func (m *Crtsh) Run(ctx *common.ModuleContext) error {
 		for _, host := range hosts {
 			host = strings.TrimPrefix(host, "*.")
 
-			// A certificate can contains other domains so we limit to one pass
-			// as argument
+			// A certificate can contains other domains so we limit to the asset
+			// pass as argument
+			if strings.Contains(host, "@") {
+				parts := strings.Split(host, "@")
+				host = parts[len(parts)-1]
+			}
+
 			if strings.HasSuffix(host, baseHostname) && !common.StringInSlice(hostnames, host) {
 				hostnames = append(hostnames, host)
 

@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -37,52 +38,80 @@ func (s *ModuleCommand) listModules() error {
 }
 
 func (s *ModuleCommand) executeModule() error {
-	if s.context.NArg() != 2 {
-		return fmt.Errorf("Error getting arguments for execution <module> <asset>.")
+	// Check if module and asset argument are set
+	if s.context.String("module") == "" {
+		return fmt.Errorf("Please specify a module to execute.")
 	}
 
-	moduleSlug := s.context.Args().Get(0)
-	asset := common.Asset{
-		Value: s.context.Args().Get(1),
-		Type:  "",
+	if s.context.String("asset") == "" {
+		return fmt.Errorf("Please specify an asset or a file containing assets.")
 	}
 
 	// Get the module from the slug
-	module, err := s.session.Module(moduleSlug)
+	module, err := s.session.Module(s.context.String("module"))
 	if err != nil {
-		logrus.Warnf("Cannot find module with slug \"%s\"", moduleSlug)
-		logrus.Debug(err)
 		return err
 	}
 
-	// Create a module context for the execution
-	ctx, err := common.NewModuleContext(asset, s.config)
-	if err != nil {
-		logrus.Warn("Cannot crate module context.")
-		logrus.Debug(err)
-		return err
+	// The asset argument can be a raw asset or a path to a file
+	assets := []common.Asset{}
+	if common.FileExists(s.context.String("asset")) {
+		file, err := os.Open(s.context.String("asset"))
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			asset := common.Asset{
+				Value: scanner.Text(),
+				Type:  "",
+			}
+			assets = append(assets, asset)
+		}
+
+		if err := scanner.Err(); err != nil {
+			return err
+		}
+	} else {
+		asset := common.Asset{
+			Value: s.context.String("asset"),
+			Type:  "",
+		}
+		assets = append(assets, asset)
 	}
 
-	// Run the module
-	err = module.Run(ctx)
-	if err != nil {
-		logrus.Warn("Module execution return an error.")
-		logrus.Debug(err)
-		return err
-	}
+	for _, asset := range assets {
+		// Create a module context for the execution
+		ctx, err := common.NewModuleContext(asset, s.config)
+		if err != nil {
+			logrus.Warn("Cannot crate module context.")
+			logrus.Debug(err)
+			return err
+		}
 
-	// Get the new assets and convert to print it as a JSON list
-	updateJob := common.FringeClientUpdateJobRequest{
-		ID:          "",
-		Status:      common.JOB_STATUS_SUCCESS,
-		Assets:      ctx.NewAssets,
-		Tags:        ctx.NewTags,
-		Description: "",
-		StartedAt:   0,
-		EndedAt:     0,
-	}
+		// Run the module
+		err = module.Run(ctx)
+		if err != nil {
+			logrus.Warn("Module execution return an error.")
+			logrus.Debug(err)
+			continue
+		}
 
-	fmt.Println(updateJob.JSON())
+		// Get the new assets and convert to print it as a JSON list
+		updateJob := common.FringeClientUpdateJobRequest{
+			ID:          "",
+			Status:      common.JOB_STATUS_SUCCESS,
+			Assets:      ctx.NewAssets,
+			Tags:        ctx.NewTags,
+			Description: "",
+			StartedAt:   0,
+			EndedAt:     0,
+		}
+
+		fmt.Println(updateJob.JSON())
+	}
 
 	return nil
 }
@@ -107,14 +136,12 @@ func (s *ModuleCommand) Execute(c *cli.Context, config *common.FringeConfig) err
 	modules.LoadModules(s.session)
 
 	// Check command args to know what to do
-	if c.Bool("list") {
+	if c.Bool("list-modules") {
 		return s.listModules()
-	} else if c.Bool("exec") {
-		return s.executeModule()
-	} else {
-		// There is no flag set, then we print the help menu
-		return cli.ShowSubcommandHelp(c)
 	}
+
+	// By default we execute a module
+	return s.executeModule()
 }
 
 func newModuleCommand() *ModuleCommand {
@@ -125,14 +152,19 @@ func newModuleCommand() *ModuleCommand {
 func init() {
 	common.RegisterCommand("module", "Uses Fringe modules manually", newModuleCommand(), []cli.Flag{
 		&cli.BoolFlag{
-			Name:    "list",
-			Aliases: []string{"l"},
-			Usage:   "List available modules then exit",
+			Name:    "list-modules",
+			Aliases: []string{"L"},
+			Usage:   "List available modules",
 		},
-		&cli.BoolFlag{
-			Name:    "exec",
-			Aliases: []string{"e"},
-			Usage:   "Execute a module",
+		&cli.StringFlag{
+			Name:    "asset",
+			Aliases: []string{"a"},
+			Usage:   "Asset or file containing assets",
+		},
+		&cli.StringFlag{
+			Name:    "module",
+			Aliases: []string{"m"},
+			Usage:   "Module slug to execute",
 		},
 	})
 }

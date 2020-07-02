@@ -45,16 +45,23 @@ information.
 
 This command interacts with the fringe modules.
 
-You can list the modules with `-l/--list`:
+You can list the modules with `-L/--list-modules`:
 
 ```bash
-fringe-runner module --list | jq
+fringe-runner module --list-modules | jq
 ```
 
-You can execute a module manually `-e/--exec`:
+You can execute a module manually:
 
 ```bash
-fringe-runner module --exec <module_slug> <asset_value>
+fringe-runner module -m module_slug -a asset_value
+```
+
+The `asset` argument can also be a file containing assets to execute the same
+module on all the assets from the file.
+
+```bash
+fringe-runner module -m crtsh -a assets.txt
 ```
 
 ### Parse a local file

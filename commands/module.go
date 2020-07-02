@@ -53,6 +53,16 @@ func (s *ModuleCommand) executeModule() error {
 		return err
 	}
 
+	workflow := &common.FringeWorkflow{}
+	if len(s.context.String("workflow")) > 0 {
+		// Parse the workflow file
+		workflow, err = common.NewFringeWorkflow(s.context.String("workflow"))
+		if err != nil {
+			logrus.Debug(err)
+			return fmt.Errorf("Cannot parse workflow file.")
+		}
+	}
+
 	// The asset argument can be a raw asset or a path to a file
 	assets := []common.Asset{}
 	if common.FileExists(s.context.String("asset")) {
@@ -97,6 +107,11 @@ func (s *ModuleCommand) executeModule() error {
 			logrus.Warn("Module execution return an error.")
 			logrus.Debug(err)
 			continue
+		}
+
+		err = workflow.Run(ctx.NewAssets, s.session, s.config)
+		if err != nil {
+			logrus.Infof("Workflow returns an error: %s", err)
 		}
 
 		// Get the new assets and convert to print it as a JSON list
@@ -165,6 +180,11 @@ func init() {
 			Name:    "module",
 			Aliases: []string{"m"},
 			Usage:   "Module slug to execute",
+		},
+		&cli.StringFlag{
+			Name:    "workflow",
+			Aliases: []string{"w"},
+			Usage:   "Workflow file to use",
 		},
 	})
 }

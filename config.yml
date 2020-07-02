@@ -26,6 +26,7 @@ module_config:
   # shodan_api_key: ""
   # dns_server: ""
   # whoisxmlapi_key: ""
+  # github_api_token: ""
   # The renderer must be one of chrome, chromium or firefox
   # webscreenshot_renderer: "chrome"|"chromium"|"firefox"
   # The path of the renderer binary

@@ -88,6 +88,7 @@ Here is a list of module's slugs available to query public resources:
 - [`certspotter`](https://sslmate.com/certspotter/): API key is not supported yet
 - [`crtsh`](crt.sh/)
 - [`dnsdumpster`](https://dnsdumpster.com/): API key is not supported yet
+- [`github-subdomains`](https://developer.github.com/v3/search/#search-code): need API token (`github_api_token`)
 - [`hackertarget`](https://hackertarget.com/)
 - [`securitytrails`](https://securitytrails.com/): need an API key sets as `securitytrails_api_key`
 - [`shodan`](https://www.shodan.io/): may use an API key sets as `shodan_api_key`

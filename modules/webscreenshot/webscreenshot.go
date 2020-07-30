@@ -41,7 +41,8 @@ func (m *WebScreenshot) ResourceURLs() []common.ModuleResource {
 }
 
 func takeScreenshotCmd(renderer string, args []string) error {
-	logrus.Info(renderer, " ", args)
+	logrus.Debugf("Execute renderer: %s %s", renderer, args)
+
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 

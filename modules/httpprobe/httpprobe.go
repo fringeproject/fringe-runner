@@ -45,10 +45,12 @@ func (m *HttpProbe) Run(ctx *common.ModuleContext) error {
 		"http://" + hostname,
 		"https://" + hostname,
 	}
+	opts := ctx.GetDefaultHTTPOptions()
+	opts.FollowRedirect = false
 
 	for _, url := range urls {
 		logrus.Debugf("Requesting: \"%s\"", url)
-		_, _, _, err := ctx.HttpRequest(http.MethodGet, url, nil, nil)
+		_, _, _, err := ctx.HttpRequest(http.MethodGet, url, nil, opts)
 		if err != nil {
 			logrus.Debug(err)
 			continue

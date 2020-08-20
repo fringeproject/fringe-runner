@@ -33,6 +33,15 @@ type WappalyzerApp struct {
 	Implies interface{} `json:"implies"`
 }
 
+func compileWappalyzerRegexp(value string) (*regexp.Regexp, error) {
+	firstPart := strings.Split(value, "\\;")[0]
+	// TODO: Golang does not support negative look ahead
+	// https://stackoverflow.com/questions/26771592/negative-look-ahead-go-regular-expressions
+	golangValidString := strings.ReplaceAll(firstPart, "[^]", ".")
+
+	return regexp.Compile(golangValidString)
+}
+
 func NewWappalyzer() *Wappalyzer {
 	mod := &Wappalyzer{}
 
@@ -120,7 +129,7 @@ func (w *Wappalyzer) ParseHeaders(headers *http.Header) error {
 			for appHeaderName, appHeaderValue := range appValue.Headers {
 				if strings.ToLower(appHeaderName) == respHeaderName {
 
-					headerRegexp, err := regexp.Compile(strings.Split(appHeaderValue, "\\;")[0])
+					headerRegexp, err := compileWappalyzerRegexp(appHeaderValue)
 					if err != nil {
 						logrus.Warnf("Cannot compile header regexp: %s", strings.Split(appHeaderValue, "\\;")[0])
 					} else {
@@ -162,7 +171,7 @@ func (w *Wappalyzer) ParseMetas(body *[]byte) error {
 						content, ok := extractMetaProperty(t, appMetaName)
 
 						if ok {
-							headerRegexp, err := regexp.Compile(strings.Split(appMetaValue, "\\;")[0])
+							headerRegexp, err := compileWappalyzerRegexp(appMetaValue)
 							if err != nil {
 								logrus.Warn("Cannot compile meta regexp: ", strings.Split(appMetaValue, "\\;")[0])
 							} else {
@@ -225,7 +234,7 @@ func (w *Wappalyzer) ParseHTML(body *[]byte) error {
 		switch v.Kind() {
 		case reflect.String:
 			htmlValue := appValue.HTML.(string)
-			htmlRegex, err := regexp.Compile(strings.Split(htmlValue, "\\;")[0])
+			htmlRegex, err := compileWappalyzerRegexp(htmlValue)
 			if err != nil {
 				logrus.Debug("Cannot compile html regexp: ", strings.Split(htmlValue, "\\;")[0])
 			} else {
@@ -238,7 +247,7 @@ func (w *Wappalyzer) ParseHTML(body *[]byte) error {
 			htmlValues := appValue.HTML.([]interface{})
 			for _, htmlValue := range htmlValues {
 				htmlValueString := htmlValue.(string)
-				htmlRegex, err := regexp.Compile(strings.Split(htmlValueString, "\\;")[0])
+				htmlRegex, err := compileWappalyzerRegexp(htmlValueString)
 				if err != nil {
 					logrus.Debug("Cannot compile html regexp: ", strings.Split(htmlValueString, "\\;")[0])
 				} else {

@@ -44,18 +44,7 @@ func (w *FringeWorkflow) String() string {
 	return "A workflow"
 }
 
-func (w *FringeWorkflow) Run(assets []Asset, sess *Session, config *FringeConfig) error {
-	for _, asset := range assets {
-		err := w.runAsset(asset, sess, config)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (w *FringeWorkflow) runAsset(asset Asset, sess *Session, config *FringeConfig) error {
+func (w *FringeWorkflow) Run(asset Asset, sess *Session, config *FringeConfig) error {
 	// Get the `new_asset` field to trigger the workflow on the `ctx.NewAssets`
 	newAsset := &w.On.NewAsset
 	if newAsset != nil {

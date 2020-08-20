@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"sync"
 
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
@@ -109,10 +110,29 @@ func (s *ModuleCommand) executeModule() error {
 			continue
 		}
 
-		err = workflow.Run(ctx.NewAssets, s.session, s.config)
-		if err != nil {
-			logrus.Infof("Workflow returns an error: %s", err)
+		assetChannel := make(chan common.Asset)
+		var workflowWG sync.WaitGroup
+		for i := 0; i < 4; i++ {
+			workflowWG.Add(1)
+
+			go func() {
+				for asset := range assetChannel {
+					err = workflow.Run(asset, s.session, s.config)
+					if err != nil {
+						logrus.Infof("Workflow returns an error: %s", err)
+					}
+				}
+
+				workflowWG.Done()
+			}()
 		}
+
+		for _, asset := range ctx.NewAssets {
+			assetChannel <- asset
+		}
+
+		close(assetChannel)
+		workflowWG.Wait()
 
 		// Get the new assets and convert to print it as a JSON list
 		updateJob := common.FringeClientUpdateJobRequest{

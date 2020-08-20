@@ -33,3 +33,6 @@ module_config:
   # webscreenshot_renderer_path: ""
   # The directory to write the screenshots
   # webscreenshot_output: ""
+  # nessus_endpoint: https://127.0.0.1:8834
+  # nessus_username: ""
+  # nessus_password: ""

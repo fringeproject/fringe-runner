@@ -19,6 +19,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/ipinfo"
 	"github.com/fringeproject/fringe-runner/modules/kafka"
 	"github.com/fringeproject/fringe-runner/modules/kubernetes"
+	"github.com/fringeproject/fringe-runner/modules/nessus"
 	"github.com/fringeproject/fringe-runner/modules/nmap"
 	"github.com/fringeproject/fringe-runner/modules/openredirect"
 	"github.com/fringeproject/fringe-runner/modules/securitytrails"
@@ -59,6 +60,7 @@ func LoadModules(sess *common.Session) {
 	sess.RegisterModule(ipinfo.NewIPInfo())
 	sess.RegisterModule(kafka.NewKafkaAPI())
 	sess.RegisterModule(kubernetes.NewKubernetesAPI())
+	sess.RegisterModule(nessus.NewNessus())
 	sess.RegisterModule(nmap.NewNmap())
 	sess.RegisterModule(openredirect.NewOpenRedirect())
 	sess.RegisterModule(securitytrails.NewSecurityTrails())

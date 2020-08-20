@@ -106,3 +106,8 @@ Here is a list of module's slugs available to query public resources:
 - [`virustotal`](https://www.virustotal.com/): use the unofficial API (ui)
 - [`whoisxmlapi`](https://reverse-ip.whoisxmlapi.com/api/documentation/making-requests): need API key (`whoisxmlapi_key`)
 - [`yougetsignal`](https://www.yougetsignal.com/)
+
+
+The following modules are still in progress:
+
+- `nessus`: Add a new scan to a module instance (`nessus_endpoint`, `nessus_username` and `nessus_password`)

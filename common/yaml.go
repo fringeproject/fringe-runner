@@ -38,6 +38,7 @@ func ParseYAMLFile(filePath string, out interface{}) error {
 
 	err = yaml.Unmarshal([]byte(file), out)
 	if err != nil {
+		logrus.Debug(err)
 		err = fmt.Errorf("The YAML file does not match the interface structure.")
 		return err
 	}

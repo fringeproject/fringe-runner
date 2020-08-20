@@ -1,0 +1,10 @@
+name: Take a screenshot of the URL
+
+on:
+  new_asset:
+    types:
+      - url
+
+jobs:
+  - name: Take a screenshot
+    module: webscreenshot

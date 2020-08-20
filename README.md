@@ -73,16 +73,35 @@ fringe-runner parse -p <file_path> | jq ".[].value"
 ```
 
 
-### Example
+## Use cases
+
+### Get website technologies with Wappalyzer
 
 You want to use the `wappalyzer` module on a URL to identify technologies on a
 website:
 
 ```bash
-fringe-runner module -e wappalyzer https://fringeproject.com | jq .[].value
+fringe-runner module -m wappalyzer https://fringeproject.com | jq .[].value
 ```
 
 This will returns a list of technologies and their versions.
+
+
+### Take screenshots a list of hostnames
+
+The file `hostnames.txt` contains a list of hostname (1 by line) and you want
+to take a screenshot of the webservers runnings on those:
+
+First, configure the screenshot renderer (see [`config.yml`](./config.yml)) then
+type the following command:
+
+```bash
+fringe-runner module -m http-probe -a hostnames.txt -w workflows/screenshot.yml
+```
+
+The runner execute the module `http-probe` on each line of the `hostnames.txt`
+file. This module checks for web-servers on HTTP (80) and HTTPS (443). Then the
+workflow `screenshot.yml` take a live screenshot for every listening web-server.
 
 
 ## Available modules

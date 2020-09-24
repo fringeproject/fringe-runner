@@ -13,6 +13,7 @@ import (
 	"github.com/fringeproject/fringe-runner/modules/dnsdumpster"
 	"github.com/fringeproject/fringe-runner/modules/docker"
 	"github.com/fringeproject/fringe-runner/modules/elasticsearch"
+	"github.com/fringeproject/fringe-runner/modules/git"
 	"github.com/fringeproject/fringe-runner/modules/github"
 	"github.com/fringeproject/fringe-runner/modules/hackertarget"
 	"github.com/fringeproject/fringe-runner/modules/httpprobe"
@@ -54,6 +55,7 @@ func LoadModules(sess *common.Session) {
 	sess.RegisterModule(dnsdumpster.NewDnsdumpster())
 	sess.RegisterModule(docker.NewDockerAPI())
 	sess.RegisterModule(elasticsearch.NewElasticSearchAPI())
+	sess.RegisterModule(git.NewHttpGit())
 	sess.RegisterModule(github.NewGithubSubdomains())
 	sess.RegisterModule(hackertarget.NewHackerTarget())
 	sess.RegisterModule(httpprobe.NewHttpProbe())
